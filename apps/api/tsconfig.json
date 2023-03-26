@@ -1,6 +1,6 @@
 {
   "extends": "adonis-preset-ts/tsconfig.json",
-  "include": ["**/*"],
+  "include": ["**/*", ".eslintrc.js"],
   "exclude": ["node_modules", "build"],
   "compilerOptions": {
     "outDir": "build",
