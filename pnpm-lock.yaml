@@ -4,7 +4,7 @@ importers:
 
   .:
     specifiers:
-      turbo: latest
+      turbo: ^1.8.5
       typescript: ~4.6
     devDependencies:
       turbo: 1.8.5
