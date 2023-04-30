@@ -1,10 +1,11 @@
 {
   "name": "mobile",
   "version": "1.0.0",
-  "main": "index.js",
+  "private": true,
+  "main": "index.ts",
   "scripts": {
-    "dev": "expo start",
     "android": "expo start --android",
+    "dev": "expo start",
     "ios": "expo start --ios",
     "web": "expo start --web"
   },
@@ -18,6 +19,5 @@
     "@babel/core": "^7.21.5",
     "@types/react": "~18.0.27",
     "typescript": "^4.9.4"
-  },
-  "private": true
+  }
 }
