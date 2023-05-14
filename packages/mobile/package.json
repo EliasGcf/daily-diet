@@ -6,8 +6,7 @@
   "scripts": {
     "android": "expo start --android",
     "dev": "expo start",
-    "ios": "expo start --ios",
-    "web": "expo start --web"
+    "ios": "expo start --ios"
   },
   "dependencies": {
     "expo": "~48.0.15",
