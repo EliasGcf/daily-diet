@@ -1,7 +1,16 @@
 import Hash from '@ioc:Adonis/Core/Hash'
-import { BaseModel, beforeCreate, beforeSave, column } from '@ioc:Adonis/Lucid/Orm'
+import {
+  BaseModel,
+  beforeCreate,
+  beforeSave,
+  column,
+  HasMany,
+  hasMany,
+} from '@ioc:Adonis/Lucid/Orm'
 import { DateTime } from 'luxon'
 import { randomUUID } from 'node:crypto'
+
+import Meal from 'App/Models/Meal'
 
 export default class User extends BaseModel {
   public static table = 'users'
@@ -31,8 +40,11 @@ export default class User extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
 
+  @hasMany(() => Meal)
+  public meals: HasMany<typeof Meal>
+
   @beforeCreate()
-  public static assignUuid(user: User) {
+  public static assignUUID(user: User) {
     user.id = randomUUID()
   }
 

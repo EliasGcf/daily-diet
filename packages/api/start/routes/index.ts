@@ -20,3 +20,4 @@
 
 import './users'
 import './auth'
+import './meals'

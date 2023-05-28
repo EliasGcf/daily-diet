@@ -6,8 +6,12 @@
  */
 
 import TestUtils from '@ioc:Adonis/Core/TestUtils'
+import Factory from '@ioc:Adonis/Lucid/Factory'
 import { assert, runFailedTests, specReporter, apiClient } from '@japa/preset-adonis'
 import type { Config } from '@japa/runner'
+import { randomUUID } from 'node:crypto'
+
+Factory.stubId(() => randomUUID())
 
 /*
 |--------------------------------------------------------------------------

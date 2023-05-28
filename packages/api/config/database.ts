@@ -8,6 +8,8 @@
 import Env from '@ioc:Adonis/Core/Env'
 import { DatabaseConfig } from '@ioc:Adonis/Lucid/Database'
 
+console.log(Env.get('DB_CONNECTION'))
+
 const databaseConfig: DatabaseConfig = {
   /*
   |--------------------------------------------------------------------------

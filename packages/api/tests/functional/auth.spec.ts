@@ -5,8 +5,8 @@ import UserFactory from 'Database/factories/UserFactory'
 
 test.group('Auth', (group) => {
   group.each.setup(async () => {
-    await Database.beginGlobalTransaction('pg')
-    return () => Database.rollbackGlobalTransaction('pg')
+    await Database.beginGlobalTransaction()
+    return () => Database.rollbackGlobalTransaction()
   })
 
   test('should be able to authenticate', async ({ client }) => {
