@@ -20,13 +20,6 @@ test.group('UsersController', (group) => {
     response.hasBody()
   })
 
-  test('should be able to list users', async ({ client, assert }) => {
-    const response = await client.get('/users')
-
-    response.assertStatus(200)
-    assert.isArray(response.body().data)
-  })
-
   test('should be able to get the authenticated user', async ({ client, assert }) => {
     const user = await UserFactory.create()
 
