@@ -18,6 +18,5 @@
 |
 */
 
-import Route from '@ioc:Adonis/Core/Route'
-
-Route.resource('users', 'UsersController').only(['store', 'index', 'show'])
+import './users'
+import './auth'

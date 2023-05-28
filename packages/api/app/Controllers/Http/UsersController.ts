@@ -17,9 +17,9 @@ export default class UsersController {
   ) {}
 
   public async store({ request, response }: HttpContextContract) {
-    const { name, email } = await request.validate(CreateUserValidator)
+    const { name, email, password } = await request.validate(CreateUserValidator)
 
-    const user = await this.createUserService.execute({ name, email })
+    const user = await this.createUserService.execute({ name, email, password })
 
     return response.status(201).send(user)
   }
@@ -34,10 +34,8 @@ export default class UsersController {
     return users
   }
 
-  public async show(ctx: HttpContextContract) {
-    const { id } = ctx.params
-
-    const user = await this.getUserByIdService.execute(id)
+  public async show({ auth }: HttpContextContract) {
+    const user = await this.getUserByIdService.execute(auth.user?.id!)
 
     return user
   }
