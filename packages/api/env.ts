@@ -29,5 +29,5 @@ export default Env.rules({
   APP_NAME: Env.schema.string(),
   DRIVE_DISK: Env.schema.enum(['local'] as const),
   NODE_ENV: Env.schema.enum(['development', 'production', 'test'] as const),
-  // ...(Env.get('DB_CONNECTION') === 'pg' ? POSTGRES_RULES : {}),
+  ...POSTGRES_RULES,
 })
