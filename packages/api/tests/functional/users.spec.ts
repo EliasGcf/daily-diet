@@ -7,7 +7,7 @@ test.group('UsersController', (group) => {
     return () => Database.rollbackGlobalTransaction()
   })
 
-  test('store', async ({ client }) => {
+  test('should be able to create an user', async ({ client }) => {
     const response = await client.post('/users').fields({
       name: 'John Doe',
       email: 'johnDoe@example.com',
@@ -17,10 +17,9 @@ test.group('UsersController', (group) => {
     response.hasBody()
   })
 
-  test('index', async ({ client }) => {
+  test('should be able to list users', async ({ client }) => {
     const response = await client.get('/users')
 
-    console.log(response.body())
     response.assertStatus(200)
   })
 })

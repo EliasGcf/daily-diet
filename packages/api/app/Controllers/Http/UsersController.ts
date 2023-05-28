@@ -1,18 +1,44 @@
+import { inject } from '@adonisjs/fold'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import User from 'App/Models/User'
 
+import CreateUserService from 'App/Services/CreateUserService'
+import FetchUsersServices from 'App/Services/FetchUsersServices'
+import GetUserByIdService from 'App/Services/GetUserByIdService'
+
+import PaginationValidator from 'App/Validators/PaginationValidator'
+import CreateUserValidator from 'App/Validators/Users/CreateUserValidator'
+
+@inject()
 export default class UsersController {
-  public async store({ request, response }: HttpContextContract) {
-    const { name, email } = request.body()
+  constructor(
+    private createUserService: CreateUserService,
+    private fetchUsersService: FetchUsersServices,
+    private getUserByIdService: GetUserByIdService
+  ) {}
 
-    const user = await User.create({ name, email })
+  public async store({ request, response }: HttpContextContract) {
+    const { name, email } = await request.validate(CreateUserValidator)
+
+    const user = await this.createUserService.execute({ name, email })
 
     return response.status(201).send(user)
   }
 
   public async index(ctx: HttpContextContract) {
-    const users = await User.all()
+    const { page = 1, perPage } = await ctx.request.validate(PaginationValidator)
+
+    const users = await this.fetchUsersService.execute({ page, perPage })
+
+    users.baseUrl('/users')
 
     return users
+  }
+
+  public async show(ctx: HttpContextContract) {
+    const { id } = ctx.params
+
+    const user = await this.getUserByIdService.execute(id)
+
+    return user
   }
 }
