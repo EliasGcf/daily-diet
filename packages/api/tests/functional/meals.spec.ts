@@ -18,4 +18,12 @@ test.group('MealsController', (group) => {
 
     response.assertStatus(201)
   })
+
+  test('should be able to delete a meal', async ({ client }) => {
+    const meal = await MealFactory.with('user', 1).create()
+
+    const response = await client.delete(`/meals/${meal.id}`).loginAs(meal.user)
+
+    response.assertStatus(204)
+  })
 })
