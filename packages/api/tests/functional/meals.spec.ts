@@ -19,6 +19,19 @@ test.group('MealsController', (group) => {
     response.assertStatus(201)
   })
 
+  test('should be able to update a meal', async ({ client }) => {
+    const meal = await MealFactory.with('user', 1).create()
+
+    const response = await client.put(`/meals/${meal.id}`).loginAs(meal.user).fields({
+      name: 'New name',
+      description: 'New description',
+      isOnDiet: false,
+      createdAt: meal.createdAt.toISO()!,
+    })
+
+    response.assertStatus(200)
+  })
+
   test('should be able to delete a meal', async ({ client }) => {
     const meal = await MealFactory.with('user', 1).create()
 
