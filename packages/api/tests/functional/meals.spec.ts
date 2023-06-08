@@ -19,6 +19,14 @@ test.group('MealsController', (group) => {
     response.assertStatus(201)
   })
 
+  test('should be able to get a meal', async ({ client }) => {
+    const meal = await MealFactory.with('user').create()
+
+    const response = await client.get(`/meals/${meal.id}`).loginAs(meal.user)
+
+    response.assertStatus(200)
+  })
+
   test('should be able to update a meal', async ({ client }) => {
     const meal = await MealFactory.with('user', 1).create()
 

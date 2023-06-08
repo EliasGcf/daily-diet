@@ -9,7 +9,7 @@ interface DeleteMealServiceRequest {
 }
 
 export default class DeleteMealService {
-  public async execute({ mealId, userId }: DeleteMealServiceRequest): Promise<void> {
+  public async execute({ mealId, userId }: DeleteMealServiceRequest) {
     const meal = await Meal.find(mealId)
 
     if (!meal) {
