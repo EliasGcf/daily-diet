@@ -1,0 +1,5 @@
+interface {{filename}}Request {}
+
+export default class {{filename}} {
+  public async execute({}: {{filename}}Request) {}
+}
