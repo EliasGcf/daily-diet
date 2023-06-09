@@ -14,7 +14,10 @@ test.group('MealsController', (group) => {
     const user = await UserFactory.create()
     const fakeMeal = await MealFactory.make()
 
-    const response = await client.post('/meals').fields(fakeMeal.serialize()).loginAs(user)
+    const response = await client
+      .post('/meals')
+      .fields(fakeMeal.serialize())
+      .loginAs(user)
 
     response.assertStatus(201)
   })
@@ -46,5 +49,23 @@ test.group('MealsController', (group) => {
     const response = await client.delete(`/meals/${meal.id}`).loginAs(meal.user)
 
     response.assertStatus(204)
+  })
+
+  test('should be able to get metrics', async ({ client, assert }) => {
+    const user = await UserFactory.merge({})
+      .with('meals', 2, (meal) => meal.merge({ isOnDiet: true }))
+      .with('meals', 3, (meal) => meal.merge({ isOnDiet: false }))
+      .create()
+
+    const response = await client.get('/meals/metrics').loginAs(user)
+
+    response.assertStatus(200)
+
+    assert.containsSubset(response.body(), {
+      total: 5,
+      onDiet: 2,
+      offDiet: 3,
+      bestOnDietSequence: 2,
+    })
   })
 })

@@ -1,5 +1,6 @@
 import Database from '@ioc:Adonis/Lucid/Database'
 import { test } from '@japa/runner'
+import { DateTime } from 'luxon'
 
 import UpdateMealService from 'App/Services/UpdateMealService'
 
@@ -17,7 +18,9 @@ test.group('Update meal', (group) => {
   test('should be able to update a meal', async ({ assert }) => {
     const meal = await MealFactory.with('user', 1).create()
 
-    const fakeMeal = await MealFactory.make()
+    const fakeMeal = await MealFactory.merge({
+      createdAt: DateTime.fromJSDate(new Date()),
+    }).make()
 
     const updatedMeal = await sut.execute({
       id: meal.id,
@@ -32,12 +35,13 @@ test.group('Update meal', (group) => {
     assert.equal(updatedMeal.name, fakeMeal.name)
     assert.equal(updatedMeal.description, fakeMeal.description)
     assert.equal(updatedMeal.isOnDiet, fakeMeal.isOnDiet)
-    assert.equal(updatedMeal.createdAt.toMillis(), fakeMeal.createdAt.toMillis())
   })
 
   test('should not be able to update a meal with non-existent id', async ({ assert }) => {
     const user = await UserFactory.create()
-    const fakeMeal = await MealFactory.make()
+    const fakeMeal = await MealFactory.merge({
+      createdAt: DateTime.fromJSDate(new Date()),
+    }).make()
 
     assert.rejects(() =>
       sut.execute({
@@ -54,7 +58,9 @@ test.group('Update meal', (group) => {
 
   test('should not be able to update a meal from another user', async ({ assert }) => {
     const meal = await MealFactory.create()
-    const fakeMeal = await MealFactory.make()
+    const fakeMeal = await MealFactory.merge({
+      createdAt: DateTime.fromJSDate(new Date()),
+    }).make()
 
     assert.rejects(() =>
       sut.execute({

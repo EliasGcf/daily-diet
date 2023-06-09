@@ -4,6 +4,7 @@ import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import CreateMealService from 'App/Services/CreateMealService'
 import DeleteMealService from 'App/Services/DeleteMealService'
 import GetUserMealService from 'App/Services/GetUserMealService'
+import GetUserMealsMetricsService from 'App/Services/GetUserMealsMetricsService'
 import UpdateMealService from 'App/Services/UpdateMealService'
 
 import CreateMealValidator from 'App/Validators/Meals/CreateMealValidator'
@@ -15,7 +16,8 @@ export default class MealsController {
     private createMealService: CreateMealService,
     private deleteMealService: DeleteMealService,
     private updateMealService: UpdateMealService,
-    private getUserMealService: GetUserMealService
+    private getUserMealService: GetUserMealService,
+    private getUserMealsMetricsService: GetUserMealsMetricsService
   ) {}
 
   public async store({ request, response, auth }: HttpContextContract) {
@@ -45,7 +47,9 @@ export default class MealsController {
   public async update({ request, auth }: HttpContextContract) {
     const { id } = request.params()
 
-    const { name, description, isOnDiet, createdAt } = await request.validate(UpdateMealValidator)
+    const { name, description, isOnDiet, createdAt } = await request.validate(
+      UpdateMealValidator
+    )
 
     const meal = await this.updateMealService.execute({
       id,
@@ -68,5 +72,13 @@ export default class MealsController {
     })
 
     return response.status(204).send({})
+  }
+
+  public async metrics({ auth }: HttpContextContract) {
+    const metrics = await this.getUserMealsMetricsService.execute({
+      userId: auth.user?.id!,
+    })
+
+    return metrics
   }
 }
