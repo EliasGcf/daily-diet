@@ -3,6 +3,7 @@ import { StyleSheet, View } from 'react-native';
 
 import { Avatar } from '../components/Avatar';
 import { Button } from '../components/Button';
+import { Meal } from '../components/Meal';
 import { Select } from '../components/Select';
 import { TextInput } from '../components/TextInput';
 
@@ -12,6 +13,14 @@ export default function Page() {
       <View style={styles.main}>
         <Avatar url="https://github.com/eliasgcf.png" />
         <TextInput label="Label" />
+        <Meal meal={{ title: 'X-tudo', isOnDiet: true, date: new Date() }} />
+        <Meal
+          meal={{
+            title: 'Salada cesar com frango grelhado bem boa',
+            isOnDiet: false,
+            date: new Date(),
+          }}
+        />
         <Button icon={ArrowLeft} title="Editar" />
         <Button icon={Trash} variant="outline" title="Editar" />
         <Select value />
