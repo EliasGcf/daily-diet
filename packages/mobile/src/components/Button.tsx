@@ -1,15 +1,15 @@
-import { RectButton } from 'react-native-gesture-handler';
+import { RectButton, RectButtonProps } from 'react-native-gesture-handler';
 import { theme } from '../shared/theme';
 import { StyleSheet, Text } from 'react-native';
 import { Icon } from 'phosphor-react-native';
 
-type ButtonProps = {
+type ButtonProps = Omit<RectButtonProps, 'style'> & {
   variant?: 'primary' | 'outline';
   title: string;
   icon?: Icon;
 };
 
-export function Button({ variant = 'primary', title, icon }: ButtonProps) {
+export function Button({ variant = 'primary', title, icon, ...rest }: ButtonProps) {
   const Icon = icon;
   const isPrimary = variant === 'primary';
 
@@ -19,6 +19,7 @@ export function Button({ variant = 'primary', title, icon }: ButtonProps) {
 
   return (
     <RectButton
+      {...rest}
       underlayColor={activeColor}
       activeOpacity={1}
       style={{ ...baseStyles.container, ...styles.container }}

@@ -2,11 +2,13 @@ import { StyleSheet, View } from 'react-native';
 import { Button } from '../components/Button';
 import { ArrowLeft, Trash } from 'phosphor-react-native';
 import { Select } from '../components/Select';
+import { TextInput } from '../components/TextInput';
 
 export default function Page() {
   return (
     <View style={styles.container}>
       <View style={styles.main}>
+        <TextInput label="Label" />
         <Button icon={ArrowLeft} title="Editar" />
         <Button icon={Trash} variant="outline" title="Editar" />
         <Select value />
