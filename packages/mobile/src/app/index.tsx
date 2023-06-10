@@ -1,11 +1,13 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
+import { Button } from "../components/Button";
+import { ArrowLeft, Trash } from "phosphor-react-native";
 
 export default function Page() {
   return (
     <View style={styles.container}>
       <View style={styles.main}>
-        <Text style={styles.title}>Hello World</Text>
-        <Text style={styles.subtitle}>This is the first page of your app.</Text>
+        <Button icon={ArrowLeft} title="Editar" />
+        <Button icon={Trash} variant="outline" title="Editar" />
       </View>
     </View>
   );
@@ -14,14 +16,13 @@ export default function Page() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
+    // alignItems: "center",
     padding: 24,
   },
   main: {
     flex: 1,
     justifyContent: "center",
-    maxWidth: 960,
-    marginHorizontal: "auto",
+    gap: 12,
   },
   title: {
     fontSize: 64,

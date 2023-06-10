@@ -37,5 +37,5 @@ export const theme = {
     lg: 18,
     xl: 24,
     '2xl': 32,
-  },
+  } as const,
 };
