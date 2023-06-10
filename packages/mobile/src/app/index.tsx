@@ -1,6 +1,7 @@
-import { StyleSheet, View } from "react-native";
-import { Button } from "../components/Button";
-import { ArrowLeft, Trash } from "phosphor-react-native";
+import { StyleSheet, View } from 'react-native';
+import { Button } from '../components/Button';
+import { ArrowLeft, Trash } from 'phosphor-react-native';
+import { Select } from '../components/Select';
 
 export default function Page() {
   return (
@@ -8,6 +9,10 @@ export default function Page() {
       <View style={styles.main}>
         <Button icon={ArrowLeft} title="Editar" />
         <Button icon={Trash} variant="outline" title="Editar" />
+        <Select value />
+        <Select value={false} />
+        <Select value selected />
+        <Select value={false} selected />
       </View>
     </View>
   );
@@ -21,15 +26,15 @@ const styles = StyleSheet.create({
   },
   main: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: 'center',
     gap: 12,
   },
   title: {
     fontSize: 64,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
   subtitle: {
     fontSize: 36,
-    color: "#38434D",
+    color: '#38434D',
   },
 });

@@ -20,9 +20,9 @@ export const theme = {
       300: '#5C6265',
       400: '#B9BBBC',
       500: '#DDDEDF',
-      600: '#DDDEDF',
+      600: '#EFF0F0',
       700: '#FAFAFA',
-    }
+    },
   },
 
   fonts: {
@@ -37,5 +37,5 @@ export const theme = {
     lg: 18,
     xl: 24,
     '2xl': 32,
-  } as const,
-};
+  },
+} as const;
