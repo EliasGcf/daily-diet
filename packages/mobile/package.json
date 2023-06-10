@@ -9,8 +9,10 @@
     "ios": "expo start --ios"
   },
   "dependencies": {
+    "@expo-google-fonts/nunito-sans": "^0.2.3",
     "expo": "~48.0.19",
     "expo-constants": "~14.2.1",
+    "expo-font": "~11.1.1",
     "expo-linking": "~4.0.1",
     "expo-router": "^1.5.3",
     "expo-status-bar": "~1.4.4",
