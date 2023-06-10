@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { RectButton, RectButtonProps } from 'react-native-gesture-handler';
+
 import { theme } from '../shared/theme';
 
 type SelectProps = Omit<RectButtonProps, 'style'> & {

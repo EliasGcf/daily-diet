@@ -1,12 +1,13 @@
-import { RectButton, RectButtonProps } from 'react-native-gesture-handler';
-import { theme } from '../shared/theme';
+import type { Icon as PhosphorIcon } from 'phosphor-react-native';
 import { StyleSheet, Text } from 'react-native';
-import { Icon } from 'phosphor-react-native';
+import { RectButton, RectButtonProps } from 'react-native-gesture-handler';
+
+import { theme } from '../shared/theme';
 
 type ButtonProps = Omit<RectButtonProps, 'style'> & {
   variant?: 'primary' | 'outline';
   title: string;
-  icon?: Icon;
+  icon?: PhosphorIcon;
 };
 
 export function Button({ variant = 'primary', title, icon, ...rest }: ButtonProps) {

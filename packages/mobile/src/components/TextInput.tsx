@@ -1,6 +1,7 @@
-import { StyleSheet, Text, View, TextInput as RNTextInput } from 'react-native';
-import { theme } from '../shared/theme';
 import { useState } from 'react';
+import { StyleSheet, Text, View, TextInput as RNTextInput } from 'react-native';
+
+import { theme } from '../shared/theme';
 
 type TextInputProps = {
   label: string;

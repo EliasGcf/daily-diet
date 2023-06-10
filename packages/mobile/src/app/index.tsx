@@ -1,6 +1,7 @@
-import { StyleSheet, View } from 'react-native';
-import { Button } from '../components/Button';
 import { ArrowLeft, Trash } from 'phosphor-react-native';
+import { StyleSheet, View } from 'react-native';
+
+import { Button } from '../components/Button';
 import { Select } from '../components/Select';
 import { TextInput } from '../components/TextInput';
 
@@ -23,7 +24,6 @@ export default function Page() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // alignItems: "center",
     padding: 24,
   },
   main: {

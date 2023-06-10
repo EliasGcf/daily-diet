@@ -1,6 +1,5 @@
 import { registerRootComponent } from 'expo';
 import { ExpoRoot } from 'expo-router';
-
 import { LogBox } from 'react-native';
 
 LogBox.ignoreLogs([
@@ -8,6 +7,7 @@ LogBox.ignoreLogs([
 ]);
 
 export function App() {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   const ctx = require.context('./src/app');
   return <ExpoRoot context={ctx} />;
