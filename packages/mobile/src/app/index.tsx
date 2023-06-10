@@ -1,7 +1,8 @@
-import { ArrowLeft, Trash } from 'phosphor-react-native';
-import { StyleSheet, View } from 'react-native';
+import { ArrowLeft, ArrowUpRight, Trash } from 'phosphor-react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 import { Avatar } from '../components/Avatar';
+import { Box } from '../components/Box';
 import { Button } from '../components/Button';
 import { Meal } from '../components/Meal';
 import { Select } from '../components/Select';
@@ -12,6 +13,15 @@ export default function Page() {
     <View style={styles.container}>
       <View style={styles.main}>
         <Avatar url="https://github.com/eliasgcf.png" />
+        <Box icon={ArrowUpRight}>
+          <Text>asdfd</Text>
+        </Box>
+        <Box icon={ArrowUpRight} brand="green">
+          <Text>asdfd</Text>
+        </Box>
+        <Box icon={ArrowUpRight} brand="red">
+          <Text>asdfd</Text>
+        </Box>
         <TextInput label="Label" />
         <Meal meal={{ title: 'X-tudo', isOnDiet: true, date: new Date() }} />
         <Meal
