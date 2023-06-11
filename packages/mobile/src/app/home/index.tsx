@@ -5,6 +5,7 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import Logo from '../../assets/logo.svg';
 import { Avatar } from '../../components/Avatar';
 import { Box } from '../../components/Box';
 import { Button } from '../../components/Button';
@@ -44,7 +45,7 @@ export default function HomePage() {
   return (
     <View style={[styles.container, { paddingTop: top + 12 }]}>
       <View style={styles.header}>
-        <Text>Logo</Text>
+        <Logo />
         <Avatar url="https://github.com/eliasgcf.png" />
       </View>
 
