@@ -1,11 +1,12 @@
 import { ArrowUpRight, Plus } from 'phosphor-react-native';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Avatar } from '../../components/Avatar';
 import { Box } from '../../components/Box';
 import { Button } from '../../components/Button';
+import { Text } from '../../components/ui/Text';
 
 export default function HomePage() {
   const { top } = useSafeAreaInsets();
@@ -18,12 +19,17 @@ export default function HomePage() {
       </View>
 
       <Box brand="green" icon={ArrowUpRight}>
-        <Text>90,86%</Text>
-        <Text>das refeições dentro da dieta</Text>
+        <Text weight="bold" size="2xl" color="gray.100">
+          90,86%
+        </Text>
+
+        <Text size="sm" color="gray.200">
+          das refeições dentro da dieta
+        </Text>
       </Box>
 
       <View style={styles.listHeader}>
-        <Text>Refeições</Text>
+        <Text color="gray.100">Refeições</Text>
         <Button title="Nova refeição" icon={Plus} />
       </View>
     </View>

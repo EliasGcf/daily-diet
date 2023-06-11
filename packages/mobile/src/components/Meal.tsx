@@ -1,8 +1,9 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import { theme } from '../shared/theme';
 import { formatTime } from '../shared/utils/format-time';
 import { Dot } from './Dot';
+import { Text } from './ui/Text';
 
 type MealProps = {
   meal: {
@@ -17,9 +18,13 @@ export function Meal({ meal }: MealProps) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.hour}>{formattedHour}</Text>
+      <Text size="xs" weight="bold">
+        {formattedHour}
+      </Text>
+
       <View style={styles.verticalLine} />
-      <Text style={styles.title} numberOfLines={1}>
+
+      <Text size="md" color="gray.200" numberOfLines={1} style={styles.title}>
         {meal.title}
       </Text>
 
@@ -43,11 +48,6 @@ const styles = StyleSheet.create({
     gap: 12,
   },
 
-  hour: {
-    fontFamily: theme.fonts.bold,
-    fontSize: theme.fontSizes.xs,
-  },
-
   verticalLine: {
     width: 1,
     backgroundColor: theme.colors.gray[400],
@@ -55,9 +55,6 @@ const styles = StyleSheet.create({
   },
 
   title: {
-    fontFamily: theme.fonts.regular,
-    fontSize: theme.fontSizes.md,
-    color: theme.colors.gray[200],
     flex: 1,
   },
 });

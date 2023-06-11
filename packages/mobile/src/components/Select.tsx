@@ -1,8 +1,9 @@
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { RectButton, RectButtonProps } from 'react-native-gesture-handler';
 
 import { theme } from '../shared/theme';
 import { Dot } from './Dot';
+import { Text } from './ui/Text';
 
 type SelectProps = Omit<RectButtonProps, 'style'> & {
   value: boolean;
@@ -24,7 +25,9 @@ export function Select({ value, selected = false, ...rest }: SelectProps) {
       ]}
     >
       <Dot size={8} color={value ? theme.colors.green.dark : theme.colors.red.dark} />
-      <Text style={[baseStyles.title]}>{value ? 'Sim' : 'Não'}</Text>
+      <Text size="sm" weight="bold" color="gray.100">
+        {value ? 'Sim' : 'Não'}
+      </Text>
     </RectButton>
   );
 }
@@ -40,11 +43,5 @@ const baseStyles = StyleSheet.create({
     borderWidth: 1,
     borderColor: theme.colors.gray[600],
     gap: 8,
-  },
-
-  title: {
-    fontSize: theme.fontSizes.sm,
-    fontFamily: theme.fonts.bold,
-    color: theme.colors.gray[100],
   },
 });

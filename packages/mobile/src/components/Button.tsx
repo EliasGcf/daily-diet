@@ -1,8 +1,9 @@
 import type { Icon as PhosphorIcon } from 'phosphor-react-native';
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { RectButton, RectButtonProps } from 'react-native-gesture-handler';
 
 import { theme } from '../shared/theme';
+import { Text } from './ui/Text';
 
 type ButtonProps = Omit<RectButtonProps, 'style'> & {
   variant?: 'primary' | 'outline';
@@ -26,7 +27,9 @@ export function Button({ variant = 'primary', title, icon, ...rest }: ButtonProp
       style={{ ...baseStyles.container, ...styles.container }}
     >
       {Icon && <Icon size={18} color={iconColor} />}
-      <Text style={{ ...baseStyles.title, ...styles.title }}>{title}</Text>
+      <Text size="sm" weight="bold" color={isPrimary ? 'white' : 'gray.100'}>
+        {title}
+      </Text>
     </RectButton>
   );
 }
@@ -44,8 +47,8 @@ const baseStyles = StyleSheet.create({
     gap: 12,
   },
   title: {
-    fontFamily: theme.fonts.bold,
-    fontSize: theme.fontSizes.sm,
+    // fontFamily: theme.fonts.bold,
+    // fontSize: theme.fontSizes.sm,
   },
 });
 
@@ -54,17 +57,11 @@ const primaryStyles = StyleSheet.create({
     backgroundColor: theme.colors.gray[200],
     borderColor: theme.colors.gray[200],
   },
-  title: {
-    color: theme.colors.white,
-  },
 });
 
 const outlineStyles = StyleSheet.create({
   container: {
     backgroundColor: theme.colors.white,
     borderColor: theme.colors.gray[100],
-  },
-  title: {
-    color: theme.colors.gray[100],
   },
 });

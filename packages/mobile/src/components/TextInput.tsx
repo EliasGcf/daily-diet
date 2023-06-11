@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { StyleSheet, Text, View, TextInput as RNTextInput } from 'react-native';
+import { StyleSheet, View, TextInput as RNTextInput } from 'react-native';
 
 import { theme } from '../shared/theme';
+import { Text } from './ui/Text';
 
 type TextInputProps = {
   label: string;
@@ -20,7 +21,10 @@ export function TextInput({ label, onChange }: TextInputProps) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>{label}</Text>
+      <Text size="sm" weight="bold" color="gray.200">
+        {label}
+      </Text>
+
       <RNTextInput
         placeholder="Digite aqui"
         placeholderTextColor={theme.colors.gray[400]}
@@ -36,12 +40,6 @@ export function TextInput({ label, onChange }: TextInputProps) {
 const styles = StyleSheet.create({
   container: {
     gap: 4,
-  },
-
-  label: {
-    fontSize: theme.fontSizes.sm,
-    fontFamily: theme.fonts.bold,
-    color: theme.colors.gray[200],
   },
 
   input: {
