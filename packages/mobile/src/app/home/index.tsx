@@ -1,8 +1,10 @@
 import { FlashList } from '@shopify/flash-list';
 import dayjs from 'dayjs';
+import { Link } from 'expo-router';
 import { ArrowUpRight, Plus } from 'phosphor-react-native';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
+import { RectButton } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import Logo from '../../assets/logo.svg';
@@ -49,15 +51,19 @@ export default function HomePage() {
         <Avatar url="https://github.com/eliasgcf.png" />
       </View>
 
-      <Box brand="green" icon={ArrowUpRight}>
-        <Text weight="bold" size="2xl" color="gray.100">
-          90,86%
-        </Text>
+      <Link href="/statistics" asChild>
+        <RectButton>
+          <Box brand="green" icon={ArrowUpRight}>
+            <Text weight="bold" size="2xl" color="gray.100">
+              90,86%
+            </Text>
 
-        <Text size="sm" color="gray.200">
-          das refeições dentro da dieta
-        </Text>
-      </Box>
+            <Text size="sm" color="gray.200">
+              das refeições dentro da dieta
+            </Text>
+          </Box>
+        </RectButton>
+      </Link>
 
       <View style={styles.listHeader}>
         <Text color="gray.100">Refeições</Text>
