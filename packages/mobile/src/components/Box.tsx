@@ -35,6 +35,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     position: 'relative',
     borderRadius: 6,
+    alignItems: 'center',
+    gap: 2,
     backgroundColor: theme.colors.gray[600],
   },
   icon: {

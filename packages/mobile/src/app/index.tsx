@@ -1,3 +1,4 @@
+import { Link } from 'expo-router';
 import { ArrowLeft, ArrowUpRight, Trash } from 'phosphor-react-native';
 import { StyleSheet, Text, View } from 'react-native';
 
@@ -13,6 +14,7 @@ export default function Page() {
     <View style={styles.container}>
       <View style={styles.main}>
         <Avatar url="https://github.com/eliasgcf.png" />
+        <Link href="/home">Home</Link>
         <Box icon={ArrowUpRight}>
           <Text>asdfd</Text>
         </Box>
