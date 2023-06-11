@@ -14,6 +14,8 @@ import { Button } from '../../components/Button';
 import { Meal } from '../../components/Meal';
 import { Text } from '../../components/ui/Text';
 
+const IS_ON_DIET = true;
+
 const MEALS = [
   {
     id: '1',
@@ -53,7 +55,7 @@ export default function HomePage() {
 
       <Link href="/statistics" asChild>
         <RectButton>
-          <Box brand="green" icon={ArrowUpRight}>
+          <Box brand={IS_ON_DIET ? 'green' : 'red'} icon={ArrowUpRight}>
             <Text weight="bold" size="2xl" color="gray.100">
               90,86%
             </Text>

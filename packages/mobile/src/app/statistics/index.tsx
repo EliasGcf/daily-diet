@@ -8,17 +8,30 @@ import { Box } from '../../components/Box';
 import { Text } from '../../components/ui/Text';
 import { theme } from '../../shared/theme';
 
+const IS_ON_DIET = true;
+
 export default function StatisticsPage() {
   const { top } = useSafeAreaInsets();
   const router = useRouter();
 
   return (
-    <View style={[styles.container, { paddingTop: top + 24 }]}>
+    <View
+      style={[
+        styles.container,
+        { paddingTop: top + 24 },
+        IS_ON_DIET
+          ? { backgroundColor: theme.colors.green.light }
+          : { backgroundColor: theme.colors.red.light },
+      ]}
+    >
       <RectButton
         onPress={router.back}
         style={[styles.backButton, { top: top + 12, left: 24 }]}
       >
-        <ArrowLeft size={24} color={theme.colors.green.dark} />
+        <ArrowLeft
+          size={24}
+          color={IS_ON_DIET ? theme.colors.green.dark : theme.colors.red.dark}
+        />
       </RectButton>
 
       <View style={styles.header}>
@@ -87,7 +100,6 @@ export default function StatisticsPage() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: theme.colors.green.light,
     position: 'relative',
   },
 
