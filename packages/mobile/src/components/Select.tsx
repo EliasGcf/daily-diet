@@ -43,5 +43,6 @@ const baseStyles = StyleSheet.create({
     borderWidth: 1,
     borderColor: theme.colors.gray[600],
     gap: 8,
+    flex: 1,
   },
 });

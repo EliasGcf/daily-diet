@@ -1,15 +1,20 @@
 import { useState } from 'react';
-import { StyleSheet, View, TextInput as RNTextInput } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  TextInput as RNTextInput,
+  TextInputProps as RNTextInputProps,
+} from 'react-native';
 
 import { theme } from '../shared/theme';
 import { Text } from './ui/Text';
 
-type TextInputProps = {
+type TextInputProps = RNTextInputProps & {
   label: string;
   onChange?: (text: string) => void;
 };
 
-export function TextInput({ label, onChange }: TextInputProps) {
+export function TextInput({ label, onChange, ...rest }: TextInputProps) {
   const [isFocused, setIsFocused] = useState(false);
   const [isFilled, setIsFilled] = useState(false);
 
@@ -26,9 +31,14 @@ export function TextInput({ label, onChange }: TextInputProps) {
       </Text>
 
       <RNTextInput
-        placeholder="Digite aqui"
+        {...rest}
         placeholderTextColor={theme.colors.gray[400]}
-        style={[styles.input, isFocused && styles.focused, isFilled && styles.filled]}
+        style={[
+          styles.input,
+          isFocused && styles.focused,
+          isFilled && styles.filled,
+          rest.multiline && styles.multilineInput,
+        ]}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
         onChangeText={handleOnChangeText}
@@ -49,6 +59,13 @@ const styles = StyleSheet.create({
     padding: 16,
     fontFamily: theme.fonts.regular,
     fontSize: theme.fontSizes.md,
+  },
+
+  multilineInput: {
+    minHeight: 120,
+    paddingHorizontal: 16,
+    paddingTop: 16,
+    paddingBottom: 16,
   },
 
   focused: {
