@@ -1,5 +1,6 @@
 import { useRouter } from 'expo-router';
 import { ArrowLeft } from 'phosphor-react-native';
+import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -11,6 +12,8 @@ import { Text } from '../../components/ui/Text';
 import { theme } from '../../shared/theme';
 
 export default function CreatePage() {
+  const [isOnDiet, setIsOnDiet] = useState<boolean | undefined>(undefined);
+
   const safeAreaInsets = useSafeAreaInsets();
   const router = useRouter();
 
@@ -56,8 +59,16 @@ export default function CreatePage() {
           </Text>
 
           <View style={{ flexDirection: 'row', gap: 8 }}>
-            <Select value />
-            <Select value={false} />
+            <Select
+              value
+              onPress={() => setIsOnDiet(true)}
+              selected={isOnDiet === true}
+            />
+            <Select
+              onPress={() => setIsOnDiet(false)}
+              value={false}
+              selected={isOnDiet === false}
+            />
           </View>
         </View>
 
