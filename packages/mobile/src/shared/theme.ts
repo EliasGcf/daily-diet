@@ -39,3 +39,5 @@ export const theme = {
     '2xl': 32,
   },
 } as const;
+
+export type Theme = typeof theme;

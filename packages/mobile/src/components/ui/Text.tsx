@@ -1,14 +1,14 @@
 import { getProperty } from 'dot-prop';
 import { Text as RNText, TextProps as RNTextProps, StyleSheet } from 'react-native';
 
-import { theme } from '../../shared/theme';
+import { Theme, theme } from '../../shared/theme';
 import { Path } from '../../shared/types/dot-path';
 
 type TextProps = RNTextProps & {
   /**
    * @default md
    */
-  size?: keyof typeof theme.fontSizes;
+  size?: keyof Theme['fontSizes'] | Theme['fontSizes'][keyof Theme['fontSizes']];
   /**
    * @default regular
    */
@@ -16,7 +16,7 @@ type TextProps = RNTextProps & {
   /**
    * @default gray.200
    */
-  color?: Path<(typeof theme)['colors']>;
+  color?: Path<Theme['colors']>;
 };
 
 export function Text({
@@ -32,15 +32,17 @@ export function Text({
         styles.base,
         weight && styles[weight],
         color && {
-          color: getProperty<(typeof theme)['colors'], string>(theme.colors, color),
+          color: getProperty<Theme['colors'], string>(theme.colors, color),
         },
-        { fontSize: theme.fontSizes[size] },
+        { fontSize: typeof size === 'number' ? size : theme.fontSizes[size] },
         style,
       ]}
       {...rest}
     />
   );
 }
+
+Text.size = theme.fontSizes;
 
 const styles = StyleSheet.create({
   base: {
