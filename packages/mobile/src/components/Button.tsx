@@ -1,5 +1,5 @@
 import type { Icon as PhosphorIcon } from 'phosphor-react-native';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { RectButton, RectButtonProps } from 'react-native-gesture-handler';
 
 import { theme } from '../shared/theme';
@@ -20,35 +20,35 @@ export function Button({ variant = 'primary', title, icon, ...rest }: ButtonProp
   const styles = isPrimary ? primaryStyles : outlineStyles;
 
   return (
-    <RectButton
-      {...rest}
-      underlayColor={activeColor}
-      activeOpacity={1}
-      style={{ ...baseStyles.container, ...styles.container }}
-    >
-      {Icon && <Icon size={18} color={iconColor} />}
-      <Text size="sm" weight="bold" color={isPrimary ? 'white' : 'gray.100'}>
-        {title}
-      </Text>
-    </RectButton>
+    <View style={{ ...baseStyles.container, ...styles.container }}>
+      <RectButton
+        {...rest}
+        underlayColor={activeColor}
+        activeOpacity={1}
+        style={baseStyles.button}
+      >
+        {Icon && <Icon size={18} color={iconColor} style={{ marginRight: 12 }} />}
+        <Text size="sm" weight="bold" color={isPrimary ? 'white' : 'gray.100'}>
+          {title}
+        </Text>
+      </RectButton>
+    </View>
   );
 }
 
 const baseStyles = StyleSheet.create({
   container: {
-    paddingHorizontal: 24,
-    paddingVertical: 16,
     borderRadius: 6,
     borderWidth: 1,
     width: '100%',
+  },
+
+  button: {
+    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    flexDirection: 'row',
-    gap: 12,
-  },
-  title: {
-    // fontFamily: theme.fonts.bold,
-    // fontSize: theme.fontSizes.sm,
+    paddingHorizontal: 24,
+    paddingVertical: 16,
   },
 });
 

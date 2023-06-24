@@ -33,6 +33,8 @@ export default function Page() {
             date: new Date(),
           }}
         />
+        <Button title="Editar" />
+        <Button title="Editar" variant="outline" />
         <Button icon={ArrowLeft} title="Editar" />
         <Button icon={Trash} variant="outline" title="Editar" />
         <Select value />

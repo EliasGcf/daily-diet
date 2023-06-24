@@ -17,6 +17,15 @@ export default function CreatePage() {
   const safeAreaInsets = useSafeAreaInsets();
   const router = useRouter();
 
+  function handleSubmit() {
+    if (isOnDiet === undefined) return;
+
+    router.push({
+      pathname: '/create/feedback',
+      params: { isOnDiet },
+    });
+  }
+
   return (
     <View style={[styles.container, { paddingTop: safeAreaInsets.top + 12 }]}>
       <View style={styles.header}>
@@ -73,7 +82,7 @@ export default function CreatePage() {
         </View>
 
         <View style={[styles.footer]}>
-          <Button title="Cadastrar refeição" />
+          <Button onPress={handleSubmit} title="Cadastrar refeição" />
         </View>
       </View>
     </View>
