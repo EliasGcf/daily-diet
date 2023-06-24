@@ -1,8 +1,7 @@
-import { getProperty } from 'dot-prop';
+import { Path, getByPath } from 'dot-path-value';
 import { Text as RNText, TextProps as RNTextProps, StyleSheet } from 'react-native';
 
 import { Theme, theme } from '../../shared/theme';
-import { Path } from '../../shared/types/dot-path';
 
 type TextProps = RNTextProps & {
   /**
@@ -16,7 +15,7 @@ type TextProps = RNTextProps & {
   /**
    * @default gray.200
    */
-  color?: Path<Theme['colors']>;
+  color?: Exclude<Path<Theme['colors']>, 'red' | 'green' | 'gray'>;
 };
 
 export function Text({
@@ -31,9 +30,7 @@ export function Text({
       style={[
         styles.base,
         weight && styles[weight],
-        color && {
-          color: getProperty<Theme['colors'], string>(theme.colors, color),
-        },
+        color && { color: getByPath(theme.colors, color) },
         { fontSize: typeof size === 'number' ? size : theme.fontSizes[size] },
         style,
       ]}

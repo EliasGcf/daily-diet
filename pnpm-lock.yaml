@@ -144,6 +144,9 @@ importers:
       dayjs:
         specifier: ^1.11.8
         version: 1.11.8
+      dot-path-value:
+        specifier: ^0.0.10
+        version: 0.0.10
       dot-prop:
         specifier: ^8.0.0
         version: 8.0.0
@@ -5675,6 +5678,10 @@ packages:
     dependencies:
       no-case: 3.0.4
       tslib: 2.5.3
+
+  /dot-path-value@0.0.10:
+    resolution: {integrity: sha512-MrVpDoFwk1xjeM0sGRuei7N3LQOylJ9iamgfxAQwPY0hPnDHL981hM/KpoQwFHMckgjZvJA0MyH7VN//ernFFA==}
+    dev: false
 
   /dot-prop@5.3.0:
     resolution: {integrity: sha512-QM8q3zDe58hqUqjraQOmzZ1LIH9SWQJTlEKCH4kJ2oQvLZk7RbQXvtDM2XEq3fwkV9CCvvH4LA0AV+ogFsBM2Q==}

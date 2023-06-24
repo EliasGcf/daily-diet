@@ -12,7 +12,7 @@
     "@expo-google-fonts/nunito-sans": "^0.2.3",
     "@shopify/flash-list": "1.4.0",
     "dayjs": "^1.11.8",
-    "dot-prop": "^8.0.0",
+    "dot-path-value": "^0.0.10",
     "expo": "~48.0.19",
     "expo-constants": "~14.2.1",
     "expo-font": "~11.1.1",
