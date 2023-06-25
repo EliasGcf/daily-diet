@@ -24,17 +24,14 @@ export default function StatisticsPage() {
           : { backgroundColor: theme.colors.red.light },
       ]}
     >
-      <RectButton
-        onPress={router.back}
-        style={[styles.backButton, { top: top + 12, left: 24 }]}
-      >
-        <ArrowLeft
-          size={24}
-          color={IS_ON_DIET ? theme.colors.green.dark : theme.colors.red.dark}
-        />
-      </RectButton>
-
       <View style={styles.header}>
+        <RectButton style={styles.goBackButton} onPress={router.back}>
+          <ArrowLeft
+            size={24}
+            color={IS_ON_DIET ? theme.colors.green.dark : theme.colors.red.dark}
+          />
+        </RectButton>
+
         <Text weight="bold" size="3xl" color="gray.100">
           90,86%
         </Text>
@@ -103,10 +100,12 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
 
-  backButton: {
-    borderRadius: 6,
-    padding: 8,
+  goBackButton: {
     position: 'absolute',
+    left: 16,
+    top: -8,
+    padding: 8,
+    borderRadius: 6,
   },
 
   header: {
