@@ -1,5 +1,5 @@
 import type { Icon as PhosphorIcon } from 'phosphor-react-native';
-import { StyleSheet, View } from 'react-native';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { RectButton, RectButtonProps } from 'react-native-gesture-handler';
 
 import { theme } from '../shared/theme';
@@ -9,9 +9,16 @@ type ButtonProps = Omit<RectButtonProps, 'style'> & {
   variant?: 'primary' | 'outline';
   title: string;
   icon?: PhosphorIcon;
+  isLoading?: boolean;
 };
 
-export function Button({ variant = 'primary', title, icon, ...rest }: ButtonProps) {
+export function Button({
+  variant = 'primary',
+  title,
+  icon,
+  isLoading,
+  ...rest
+}: ButtonProps) {
   const Icon = icon;
   const isPrimary = variant === 'primary';
 
@@ -20,17 +27,29 @@ export function Button({ variant = 'primary', title, icon, ...rest }: ButtonProp
   const styles = isPrimary ? primaryStyles : outlineStyles;
 
   return (
-    <View style={{ ...baseStyles.container, ...styles.container }}>
+    <View
+      style={[
+        baseStyles.container,
+        styles.container,
+        (rest.enabled === false || isLoading) && baseStyles.disabled,
+      ]}
+    >
       <RectButton
         {...rest}
         underlayColor={activeColor}
         activeOpacity={1}
         style={baseStyles.button}
       >
-        {Icon && <Icon size={18} color={iconColor} style={{ marginRight: 12 }} />}
-        <Text size="sm" weight="bold" color={isPrimary ? 'white' : 'gray.100'}>
-          {title}
-        </Text>
+        {isLoading ? (
+          <ActivityIndicator color={theme.colors.green.mid} />
+        ) : (
+          <>
+            {Icon && <Icon size={18} color={iconColor} style={{ marginRight: 12 }} />}
+            <Text size="sm" weight="bold" color={isPrimary ? 'white' : 'gray.100'}>
+              {title}
+            </Text>
+          </>
+        )}
       </RectButton>
     </View>
   );
@@ -49,6 +68,10 @@ const baseStyles = StyleSheet.create({
     paddingHorizontal: 24,
     paddingVertical: 16,
     borderRadius: 6,
+  },
+
+  disabled: {
+    opacity: 0.5,
   },
 });
 

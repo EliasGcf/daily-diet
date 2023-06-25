@@ -1,5 +1,6 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { ArrowLeft, Pencil, Trash } from 'phosphor-react-native';
+import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -16,15 +17,26 @@ type Params = {
   id: string;
 };
 
+type Stage = 'dialog-open' | 'dialog-closed' | 'deleting';
+
 export default function ViewMeal() {
   const safeAreaInsets = useSafeAreaInsets();
   const router = useRouter();
   const params = useLocalSearchParams() as Params;
+  const [stage, setStage] = useState<Stage>('dialog-closed');
 
   const meal = MEALS.find((fMeal) => fMeal.id === params.id);
 
   if (!meal) {
     return router.replace('/404');
+  }
+
+  function handleDelete() {
+    setStage('deleting');
+
+    setTimeout(() => {
+      setStage('dialog-closed');
+    }, 1000);
   }
 
   return (
@@ -75,13 +87,22 @@ export default function ViewMeal() {
         <View style={[styles.footer]}>
           <Button icon={Pencil} title="Editar refeição" />
 
-          <Dialog.Root>
+          <Dialog.Root
+            open={stage === 'dialog-open'}
+            onOpenChange={(isOpen) => setStage(isOpen ? 'dialog-open' : 'dialog-closed')}
+          >
             <Dialog.Portal center>
-              <ConfirmDeleteDialog />
+              <ConfirmDeleteDialog handleConfirm={handleDelete} />
             </Dialog.Portal>
 
             <Dialog.Trigger asChild>
-              <Button icon={Trash} variant="outline" title="Excluir refeição" />
+              <Button
+                isLoading={stage === 'deleting'}
+                onPress={() => setStage('dialog-open')}
+                icon={Trash}
+                variant="outline"
+                title="Excluir refeição"
+              />
             </Dialog.Trigger>
           </Dialog.Root>
         </View>

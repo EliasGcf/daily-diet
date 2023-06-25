@@ -5,7 +5,11 @@ import { Button } from './Button';
 import { Dialog } from './Dialog';
 import { Text } from './ui/Text';
 
-export function ConfirmDeleteDialog() {
+type Props = {
+  handleConfirm: () => void;
+};
+
+export function ConfirmDeleteDialog({ handleConfirm }: Props) {
   return (
     <Dialog.Content style={styles.content}>
       <Text size="lg" weight="bold" color="gray.200" style={styles.title}>
@@ -15,14 +19,14 @@ export function ConfirmDeleteDialog() {
       <View style={styles.footer}>
         <View style={styles.button}>
           <Dialog.Close asChild>
-            <Pressable onPress={() => console.log('cancel')}>
+            <Pressable>
               <Button variant="outline" title="Cancelar" />
             </Pressable>
           </Dialog.Close>
         </View>
 
         <View style={styles.button}>
-          <Pressable onPress={() => console.log('confirm')}>
+          <Pressable onPress={handleConfirm}>
             <Button variant="primary" title="Sim, excluir" />
           </Pressable>
         </View>
