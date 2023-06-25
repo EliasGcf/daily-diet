@@ -73,24 +73,17 @@ export default function ViewMeal() {
         )}
 
         <View style={[styles.footer]}>
-          <Dialog.Root>
-            <Dialog.Trigger asChild>
-              <Button icon={Pencil} title="Editar refeição" />
-            </Dialog.Trigger>
+          <Button icon={Pencil} title="Editar refeição" />
 
-            <Dialog.Portal
-              style={{
-                flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center',
-                paddingHorizontal: 24,
-              }}
-            >
+          <Dialog.Root>
+            <Dialog.Portal center>
               <ConfirmDeleteDialog />
             </Dialog.Portal>
-          </Dialog.Root>
 
-          <Button icon={Trash} variant="outline" title="Excluir refeição" />
+            <Dialog.Trigger asChild>
+              <Button icon={Trash} variant="outline" title="Excluir refeição" />
+            </Dialog.Trigger>
+          </Dialog.Root>
         </View>
       </View>
     </View>
