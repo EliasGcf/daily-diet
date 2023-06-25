@@ -5,6 +5,8 @@ import { RectButton } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Button } from '../../components/Button';
+import { ConfirmDeleteDialog } from '../../components/ConfirmDeleteDialog';
+import { Dialog } from '../../components/Dialog';
 import { Tag } from '../../components/Tag';
 import { Text } from '../../components/ui/Text';
 import { MEALS } from '../../shared/meals';
@@ -71,7 +73,14 @@ export default function ViewMeal() {
         )}
 
         <View style={[styles.footer]}>
-          <Button icon={Pencil} title="Editar refeição" />
+          <Dialog.Root>
+            <Dialog.Trigger asChild>
+              <Button icon={Pencil} title="Editar refeição" />
+            </Dialog.Trigger>
+
+            <ConfirmDeleteDialog />
+          </Dialog.Root>
+
           <Button icon={Trash} variant="outline" title="Excluir refeição" />
         </View>
       </View>

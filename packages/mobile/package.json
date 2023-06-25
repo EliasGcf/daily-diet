@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@expo-google-fonts/nunito-sans": "^0.2.3",
+    "@radix-ui/react-slot": "^1.0.2",
     "@shopify/flash-list": "1.4.0",
     "dayjs": "^1.11.8",
     "dot-path-value": "^0.0.10",
