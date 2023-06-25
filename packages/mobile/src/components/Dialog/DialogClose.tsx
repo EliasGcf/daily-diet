@@ -10,7 +10,7 @@ export function DialogClose({ asChild = false, ...rest }: DialogCloseProps) {
 
   const Comp = asChild ? (Slot as any) : TouchableOpacity;
 
-  return <Comp onPress={handleClose} {...rest} />;
+  return <Comp activeOpacity={0.7} onPressOut={handleClose} {...rest} />;
 }
 
 DialogClose.displayName = 'DialogClose';

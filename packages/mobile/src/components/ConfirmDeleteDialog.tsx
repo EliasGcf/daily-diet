@@ -1,4 +1,4 @@
-import { StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 
 import { theme } from '../shared/theme';
 import { Button } from './Button';
@@ -15,12 +15,16 @@ export function ConfirmDeleteDialog() {
       <View style={styles.footer}>
         <View style={styles.button}>
           <Dialog.Close asChild>
-            <Button variant="outline" title="Cancelar" />
+            <Pressable onPress={() => console.log('cancel')}>
+              <Button variant="outline" title="Cancelar" />
+            </Pressable>
           </Dialog.Close>
         </View>
 
         <View style={styles.button}>
-          <Button variant="primary" title="Sim, excluir" />
+          <Pressable onPress={() => console.log('confirm')}>
+            <Button variant="primary" title="Sim, excluir" />
+          </Pressable>
         </View>
       </View>
     </Dialog.Content>

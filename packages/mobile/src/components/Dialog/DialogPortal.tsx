@@ -16,6 +16,7 @@ export function DialogPortal({ children, style, center, ...rest }: DialogPortalP
       visible={isOpen}
       animationType="fade"
       onRequestClose={handleClose}
+      statusBarTranslucent
       {...rest}
     >
       <Pressable style={styles.overlay} onPress={handleClose}>
