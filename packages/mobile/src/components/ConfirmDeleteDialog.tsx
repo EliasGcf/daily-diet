@@ -7,22 +7,20 @@ import { Text } from './ui/Text';
 
 export function ConfirmDeleteDialog() {
   return (
-    <Dialog.Content animationType="fade" style={styles.container}>
-      <View style={styles.content}>
-        <Text size="lg" weight="bold" color="gray.200" style={styles.title}>
-          Deseja realmente excluir o registro da refeição?
-        </Text>
+    <Dialog.Content style={styles.content}>
+      <Text size="lg" weight="bold" color="gray.200" style={styles.title}>
+        Deseja realmente excluir o registro da refeição?
+      </Text>
 
-        <View style={styles.footer}>
-          <View style={styles.button}>
-            <Dialog.Close asChild>
-              <Button variant="outline" title="Cancelar" />
-            </Dialog.Close>
-          </View>
+      <View style={styles.footer}>
+        <View style={styles.button}>
+          <Dialog.Close asChild>
+            <Button variant="outline" title="Cancelar" />
+          </Dialog.Close>
+        </View>
 
-          <View style={styles.button}>
-            <Button variant="primary" title="Sim, excluir" />
-          </View>
+        <View style={styles.button}>
+          <Button variant="primary" title="Sim, excluir" />
         </View>
       </View>
     </Dialog.Content>
@@ -30,11 +28,6 @@ export function ConfirmDeleteDialog() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    justifyContent: 'center',
-    paddingHorizontal: 24,
-  },
-
   content: {
     backgroundColor: theme.colors.white,
     paddingHorizontal: 24,

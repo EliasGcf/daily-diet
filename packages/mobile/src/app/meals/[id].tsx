@@ -78,7 +78,16 @@ export default function ViewMeal() {
               <Button icon={Pencil} title="Editar refeição" />
             </Dialog.Trigger>
 
-            <ConfirmDeleteDialog />
+            <Dialog.Portal
+              style={{
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+                paddingHorizontal: 24,
+              }}
+            >
+              <ConfirmDeleteDialog />
+            </Dialog.Portal>
           </Dialog.Root>
 
           <Button icon={Trash} variant="outline" title="Excluir refeição" />

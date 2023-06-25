@@ -1,8 +1,9 @@
 import React, { PropsWithChildren, createContext, useMemo, useState } from 'react';
 
 type DialogContextProps = {
-  open: boolean;
+  isOpen: boolean;
   onOpenChange: (open: boolean) => void;
+  handleClose: () => void;
 };
 
 const DialogContext = createContext({} as DialogContextProps);
@@ -12,8 +13,9 @@ export function DialogProvider({ children }: Required<PropsWithChildren>) {
 
   const value = useMemo(
     () => ({
-      open: isOpen,
+      isOpen,
       onOpenChange: (open: boolean) => setIsOpen(open),
+      handleClose: () => setIsOpen(false),
     }),
     [isOpen],
   );
