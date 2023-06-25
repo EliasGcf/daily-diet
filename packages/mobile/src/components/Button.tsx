@@ -49,6 +49,7 @@ const baseStyles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 24,
     paddingVertical: 16,
+    borderRadius: 6,
   },
 });
 

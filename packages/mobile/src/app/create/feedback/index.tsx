@@ -11,7 +11,7 @@ import { Text } from '../../../components/ui/Text';
 const ITEMS = {
   true: {
     title: (
-      <Text size="xl" weight="bold" color="green.dark">
+      <Text size="2xl" weight="bold" color="green.dark">
         Continue assim!
       </Text>
     ),
@@ -28,7 +28,7 @@ const ITEMS = {
   },
   false: {
     title: (
-      <Text size="xl" weight="bold" color="red.dark">
+      <Text size="2xl" weight="bold" color="red.dark">
         Que pena!
       </Text>
     ),

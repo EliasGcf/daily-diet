@@ -35,7 +35,7 @@ export default function StatisticsPage() {
       </RectButton>
 
       <View style={styles.header}>
-        <Text weight="bold" size="2xl" color="gray.100">
+        <Text weight="bold" size="3xl" color="gray.100">
           90,86%
         </Text>
 
@@ -51,7 +51,7 @@ export default function StatisticsPage() {
 
         <View style={styles.cards}>
           <Box>
-            <Text weight="bold" size="xl" color="gray.100">
+            <Text weight="bold" size="2xl" color="gray.100">
               22
             </Text>
 
@@ -61,7 +61,7 @@ export default function StatisticsPage() {
           </Box>
 
           <Box>
-            <Text weight="bold" size="xl" color="gray.100">
+            <Text weight="bold" size="2xl" color="gray.100">
               109
             </Text>
 
@@ -72,7 +72,7 @@ export default function StatisticsPage() {
 
           <View style={{ flexDirection: 'row', gap: 12 }}>
             <Box brand="green" style={{ flex: 1 }}>
-              <Text weight="bold" size="xl" color="gray.100">
+              <Text weight="bold" size="2xl" color="gray.100">
                 99
               </Text>
 
@@ -82,7 +82,7 @@ export default function StatisticsPage() {
             </Box>
 
             <Box brand="red" style={{ flex: 1 }}>
-              <Text weight="bold" size="xl" color="gray.100">
+              <Text weight="bold" size="2xl" color="gray.100">
                 10
               </Text>
 

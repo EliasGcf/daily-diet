@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 import { Link } from 'expo-router';
 import { ArrowUpRight, Plus } from 'phosphor-react-native';
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -13,35 +13,9 @@ import { Box } from '../../components/Box';
 import { Button } from '../../components/Button';
 import { Meal } from '../../components/Meal';
 import { Text } from '../../components/ui/Text';
+import { MEALS } from '../../shared/meals';
 
 const IS_ON_DIET = true;
-
-const MEALS = [
-  {
-    id: '1',
-    title: 'Pão com ovo',
-    isOnDiet: true,
-    date: new Date('2021-09-10T13:00:00'),
-  },
-  {
-    id: '2',
-    title: 'Panqueca',
-    isOnDiet: false,
-    date: new Date('2021-09-10T14:00:00'),
-  },
-  {
-    id: '3',
-    title: 'Omelete',
-    isOnDiet: true,
-    date: new Date('2021-09-11T13:00:00'),
-  },
-  {
-    id: '4',
-    title: 'Tapioca',
-    isOnDiet: true,
-    date: new Date('2021-09-12T13:00:00'),
-  },
-];
 
 export default function HomePage() {
   const { top } = useSafeAreaInsets();
@@ -56,7 +30,7 @@ export default function HomePage() {
       <Link href="/statistics" asChild>
         <RectButton>
           <Box brand={IS_ON_DIET ? 'green' : 'red'} icon={ArrowUpRight}>
-            <Text weight="bold" size="2xl" color="gray.100">
+            <Text weight="bold" size="3xl" color="gray.100">
               90,86%
             </Text>
 
@@ -83,18 +57,27 @@ export default function HomePage() {
           const isFirstOfTheDay =
             index === 0 || item.date.getDate() !== MEALS[index - 1].date.getDate();
 
+          const Item = (
+            <Link asChild href={`/meals/${item.id}`}>
+              <TouchableOpacity activeOpacity={0.7}>
+                <Meal meal={item} />
+              </TouchableOpacity>
+            </Link>
+          );
+
           if (isFirstOfTheDay) {
             return (
               <View style={{ gap: 8, marginTop: 32 }}>
                 <Text size="lg" weight="bold" color="gray.100">
                   {dayjs(item.date).format('DD.MM.YYYY')}
                 </Text>
-                <Meal meal={item} />
+
+                {Item}
               </View>
             );
           }
 
-          return <Meal meal={item} />;
+          return Item;
         }}
       />
     </View>
