@@ -6,8 +6,9 @@ import {
   TextInputProps as RNTextInputProps,
 } from 'react-native';
 
-import { theme } from '../shared/theme';
-import { Text } from './ui/Text';
+import { Text } from '@components/ui/Text';
+
+import { theme } from '@shared/theme';
 
 type TextInputProps = RNTextInputProps & {
   label: string;

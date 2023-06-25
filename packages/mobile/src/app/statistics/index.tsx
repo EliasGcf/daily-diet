@@ -4,9 +4,10 @@ import { StyleSheet, View } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { Box } from '../../components/Box';
-import { Text } from '../../components/ui/Text';
-import { theme } from '../../shared/theme';
+import { Box } from '@components/Box';
+import { Text } from '@components/ui/Text';
+
+import { theme } from '@shared/theme';
 
 const IS_ON_DIET = true;
 

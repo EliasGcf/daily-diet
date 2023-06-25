@@ -2,7 +2,7 @@ import { Icon as PhosphorIcon } from 'phosphor-react-native';
 import { PropsWithChildren } from 'react';
 import { StyleSheet, View, ViewProps } from 'react-native';
 
-import { theme } from '../shared/theme';
+import { theme } from '@shared/theme';
 
 type BoxProps = ViewProps & {
   icon?: PhosphorIcon;

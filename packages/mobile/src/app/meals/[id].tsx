@@ -5,13 +5,14 @@ import { StyleSheet, View } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { Button } from '../../components/Button';
-import { ConfirmDeleteDialog } from '../../components/ConfirmDeleteDialog';
-import { Dialog } from '../../components/Dialog';
-import { Tag } from '../../components/Tag';
-import { Text } from '../../components/ui/Text';
-import { MEALS } from '../../shared/meals';
-import { theme } from '../../shared/theme';
+import { Button } from '@components/Button';
+import { ConfirmDeleteDialog } from '@components/ConfirmDeleteDialog';
+import { Dialog } from '@components/Dialog';
+import { Tag } from '@components/Tag';
+import { Text } from '@components/ui/Text';
+
+import { MEALS } from '@shared/meals';
+import { theme } from '@shared/theme';
 
 type Params = {
   id: string;

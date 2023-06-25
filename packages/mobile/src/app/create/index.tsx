@@ -5,11 +5,12 @@ import { StyleSheet, View } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { Button } from '../../components/Button';
-import { Select } from '../../components/Select';
-import { TextInput } from '../../components/TextInput';
-import { Text } from '../../components/ui/Text';
-import { theme } from '../../shared/theme';
+import { Button } from '@components/Button';
+import { Select } from '@components/Select';
+import { TextInput } from '@components/TextInput';
+import { Text } from '@components/ui/Text';
+
+import { theme } from '@shared/theme';
 
 export default function CreatePage() {
   const [isOnDiet, setIsOnDiet] = useState<boolean | undefined>(undefined);

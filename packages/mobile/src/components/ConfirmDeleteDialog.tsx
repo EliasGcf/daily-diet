@@ -1,9 +1,10 @@
 import { Pressable, StyleSheet, View } from 'react-native';
 
-import { theme } from '../shared/theme';
-import { Button } from './Button';
-import { Dialog } from './Dialog';
-import { Text } from './ui/Text';
+import { Button } from '@components/Button';
+import { Dialog } from '@components/Dialog';
+import { Text } from '@components/ui/Text';
+
+import { theme } from '@shared/theme';
 
 type Props = {
   handleConfirm: () => void;

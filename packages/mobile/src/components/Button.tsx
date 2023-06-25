@@ -2,8 +2,9 @@ import type { Icon as PhosphorIcon } from 'phosphor-react-native';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { RectButton, RectButtonProps } from 'react-native-gesture-handler';
 
-import { theme } from '../shared/theme';
-import { Text } from './ui/Text';
+import { Text } from '@components/ui/Text';
+
+import { theme } from '@shared/theme';
 
 type ButtonProps = Omit<RectButtonProps, 'style'> & {
   variant?: 'primary' | 'outline';

@@ -3,10 +3,11 @@ import { Link, useLocalSearchParams } from 'expo-router';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import IsOffDietImg from '../../../assets/images/is-off-diet-feedback.png';
-import IsOnDietImg from '../../../assets/images/is-on-diet-feedback.png';
-import { Button } from '../../../components/Button';
-import { Text } from '../../../components/ui/Text';
+import IsOffDietImg from '@assets/images/is-off-diet-feedback.png';
+import IsOnDietImg from '@assets/images/is-on-diet-feedback.png';
+
+import { Button } from '@components/Button';
+import { Text } from '@components/ui/Text';
 
 const ITEMS = {
   true: {

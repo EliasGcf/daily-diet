@@ -2,9 +2,10 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { RectButton, RectButtonProps } from 'react-native-gesture-handler';
 
-import { theme } from '../shared/theme';
-import { Dot } from './Dot';
-import { Text } from './ui/Text';
+import { Dot } from '@components/Dot';
+import { Text } from '@components/ui/Text';
+
+import { theme } from '@shared/theme';
 
 type SelectProps = Omit<RectButtonProps, 'style'> & {
   value: boolean;

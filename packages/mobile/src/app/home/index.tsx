@@ -7,13 +7,15 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import Logo from '../../assets/logo.svg';
-import { Avatar } from '../../components/Avatar';
-import { Box } from '../../components/Box';
-import { Button } from '../../components/Button';
-import { Meal } from '../../components/Meal';
-import { Text } from '../../components/ui/Text';
-import { MEALS } from '../../shared/meals';
+import Logo from '@assets/logo.svg';
+
+import { Avatar } from '@components/Avatar';
+import { Box } from '@components/Box';
+import { Button } from '@components/Button';
+import { Meal } from '@components/Meal';
+import { Text } from '@components/ui/Text';
+
+import { MEALS } from '@shared/meals';
 
 const IS_ON_DIET = true;
 

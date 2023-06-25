@@ -1,8 +1,9 @@
 import { StyleSheet, View } from 'react-native';
 
-import { theme } from '../shared/theme';
-import { Dot } from './Dot';
-import { Text } from './ui/Text';
+import { Dot } from '@components/Dot';
+import { Text } from '@components/ui/Text';
+
+import { theme } from '@shared/theme';
 
 type TagProps = {
   title: string;

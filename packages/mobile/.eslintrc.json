@@ -50,12 +50,10 @@
         "alphabetize": { "order": "asc", "ignoreCase": true },
         "groups": [
           ["/^react$/", "module"],
-          "/^~/assets/",
-          "/^~/components/",
-          "/^~/pages/",
-          "/^~/routes/",
-          "/^~/services/",
-          "/^~/utils/",
+          "/^@app/",
+          "/^@assets/",
+          "/^@components/",
+          "/^@shared/",
           ["parent", "sibling"],
           "index"
         ]
@@ -64,7 +62,9 @@
   },
   "settings": {
     "import/resolver": {
-      "typescript": {}
+      "typescript": {
+        "project": ["packages/mobile/tsconfig.json"]
+      }
     }
   },
   "overrides": [
