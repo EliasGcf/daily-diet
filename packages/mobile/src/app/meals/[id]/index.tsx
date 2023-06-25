@@ -1,4 +1,4 @@
-import { useLocalSearchParams, useRouter } from 'expo-router';
+import { Link, useLocalSearchParams, useRouter } from 'expo-router';
 import { ArrowLeft, Pencil, Trash } from 'phosphor-react-native';
 import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
@@ -86,7 +86,9 @@ export default function ViewMeal() {
         )}
 
         <View style={[styles.footer]}>
-          <Button icon={Pencil} title="Editar refeição" />
+          <Link asChild href={`/meals/${meal.id}/edit`}>
+            <Button icon={Pencil} title="Editar refeição" />
+          </Link>
 
           <Dialog.Root
             open={stage === 'dialog-open'}

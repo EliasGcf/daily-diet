@@ -17,11 +17,8 @@ type TextInputProps = RNTextInputProps & {
 
 export function TextInput({ label, onChange, ...rest }: TextInputProps) {
   const [isFocused, setIsFocused] = useState(false);
-  const [isFilled, setIsFilled] = useState(false);
 
   function handleOnChangeText(text: string) {
-    setIsFilled(!!text.trim());
-
     if (onChange) onChange(text);
   }
 
@@ -37,7 +34,6 @@ export function TextInput({ label, onChange, ...rest }: TextInputProps) {
         style={[
           styles.input,
           isFocused && styles.focused,
-          isFilled && styles.filled,
           rest.multiline && styles.multilineInput,
         ]}
         onFocus={() => setIsFocused(true)}
@@ -70,10 +66,6 @@ const styles = StyleSheet.create({
   },
 
   focused: {
-    borderColor: theme.colors.gray[300],
-  },
-
-  filled: {
     borderColor: theme.colors.gray[300],
   },
 });
