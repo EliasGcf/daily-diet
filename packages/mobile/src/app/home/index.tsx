@@ -30,7 +30,7 @@ export default function HomePage() {
       </View>
 
       <Link href="/statistics" asChild>
-        <RectButton>
+        <RectButton activeOpacity={0}>
           <Box brand={IS_ON_DIET ? 'green' : 'red'} icon={ArrowUpRight}>
             <Text weight="bold" size="3xl" color="gray.100">
               90,86%
