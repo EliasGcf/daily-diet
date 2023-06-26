@@ -16,10 +16,26 @@ import { theme } from '@shared/theme';
 export default function CreatePage() {
   const [isOnDiet, setIsOnDiet] = useState<boolean | undefined>(undefined);
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [selectedTime, setSelectedTime] = useState(new Date());
 
   const safeAreaInsets = useSafeAreaInsets();
   const router = useRouter();
+
+  function handleDateChange(type: 'date' | 'time', date: Date) {
+    const newDate = new Date(selectedDate);
+
+    if (type === 'date') {
+      newDate.setFullYear(date.getFullYear());
+      newDate.setMonth(date.getMonth());
+      newDate.setDate(date.getDate());
+
+      setSelectedDate(newDate);
+    } else {
+      newDate.setHours(date.getHours());
+      newDate.setMinutes(date.getMinutes());
+
+      setSelectedDate(newDate);
+    }
+  }
 
   function handleSubmit() {
     if (isOnDiet === undefined) return;
@@ -52,7 +68,7 @@ export default function CreatePage() {
               mode="date"
               label="Data"
               value={selectedDate}
-              onChange={setSelectedDate}
+              onChange={(date) => handleDateChange('date', date)}
             />
           </View>
 
@@ -60,8 +76,8 @@ export default function CreatePage() {
             <DatePicker
               mode="time"
               label="Hora"
-              value={selectedTime}
-              onChange={setSelectedTime}
+              value={selectedDate}
+              onChange={(date) => handleDateChange('time', date)}
             />
           </View>
         </View>

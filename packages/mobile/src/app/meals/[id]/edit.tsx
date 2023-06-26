@@ -6,6 +6,7 @@ import { RectButton } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Button } from '@components/Button';
+import { DatePicker } from '@components/DatePicker';
 import { Select } from '@components/Select';
 import { TextInput } from '@components/TextInput';
 import { Text } from '@components/ui/Text';
@@ -26,6 +27,24 @@ export default function EditPage() {
 
   const [isOnDiet, setIsOnDiet] = useState<boolean>(meal.isOnDiet);
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(meal.date);
+
+  function handleDateChange(type: 'date' | 'time', date: Date) {
+    const newDate = new Date(selectedDate);
+
+    if (type === 'date') {
+      newDate.setFullYear(date.getFullYear());
+      newDate.setMonth(date.getMonth());
+      newDate.setDate(date.getDate());
+
+      setSelectedDate(newDate);
+    } else {
+      newDate.setHours(date.getHours());
+      newDate.setMinutes(date.getMinutes());
+
+      setSelectedDate(newDate);
+    }
+  }
 
   function handleSubmit() {
     setIsLoading(true);
@@ -56,32 +75,20 @@ export default function EditPage() {
 
         <View style={styles.formTime}>
           <View style={{ flex: 1 }}>
-            <TextInput
+            <DatePicker
+              mode="date"
               label="Data"
-              placeholder="DD/MM/YYYY"
-              autoCapitalize="none"
-              autoCorrect={false}
-              defaultValue={meal.date
-                .toLocaleDateString()
-                .split('/')
-                .map((date) => date.padStart(2, '0'))
-                .join('/')}
+              value={selectedDate}
+              onChange={(date) => handleDateChange('date', date)}
             />
           </View>
 
           <View style={{ flex: 1 }}>
-            <TextInput
+            <DatePicker
+              mode="time"
               label="Hora"
-              placeholder="hh:mm"
-              autoCapitalize="none"
-              autoCorrect={false}
-              defaultValue={meal.date
-                .toLocaleTimeString()
-                .split(':')
-                .map((date) => date.padStart(2, '0'))
-                .join(':')
-                .replace(':00 PM', '')
-                .replace(':00 AM', '')}
+              value={selectedDate}
+              onChange={(date) => handleDateChange('time', date)}
             />
           </View>
         </View>

@@ -1,9 +1,11 @@
 import dayjs from 'dayjs';
 import { useState } from 'react';
-import { Platform, Pressable, View } from 'react-native';
+import { Pressable, View } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 import { TextInput } from '@components/TextInput';
+
+import { Platform } from '@shared/platform';
 
 type Props = {
   value: Date;
@@ -41,7 +43,7 @@ export function DatePicker({ value, label, onChange, mode }: Props) {
     onChange(date);
   }
 
-  const platformSettings = SETTINGS[Platform.OS as 'ios' | 'android'][mode];
+  const platformSettings = SETTINGS[Platform.OS][mode];
 
   return (
     <View>
