@@ -12,10 +12,11 @@ import { theme } from '@shared/theme';
 
 type TextInputProps = RNTextInputProps & {
   label: string;
+  disabled?: boolean;
   onChange?: (text: string) => void;
 };
 
-export function TextInput({ label, onChange, ...rest }: TextInputProps) {
+export function TextInput({ label, onChange, disabled, ...rest }: TextInputProps) {
   const [isFocused, setIsFocused] = useState(false);
 
   function handleOnChangeText(text: string) {
@@ -30,6 +31,7 @@ export function TextInput({ label, onChange, ...rest }: TextInputProps) {
 
       <RNTextInput
         {...rest}
+        editable={!disabled}
         placeholderTextColor={theme.colors.gray[400]}
         style={[
           styles.input,

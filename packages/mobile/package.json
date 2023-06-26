@@ -11,6 +11,7 @@
   "dependencies": {
     "@expo-google-fonts/nunito-sans": "^0.2.3",
     "@radix-ui/react-slot": "^1.0.2",
+    "@react-native-community/datetimepicker": "6.7.3",
     "@shopify/flash-list": "1.4.0",
     "dayjs": "^1.11.8",
     "dot-path-value": "^0.0.10",
@@ -25,6 +26,7 @@
     "react": "18.2.0",
     "react-native": "0.71.8",
     "react-native-gesture-handler": "~2.9.0",
+    "react-native-modal-datetime-picker": "^15.0.1",
     "react-native-safe-area-context": "4.5.0",
     "react-native-screens": "~3.20.0",
     "react-native-svg": "13.4.0"

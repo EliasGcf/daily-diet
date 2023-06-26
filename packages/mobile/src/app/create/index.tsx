@@ -6,6 +6,7 @@ import { RectButton } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Button } from '@components/Button';
+import { DatePicker } from '@components/DatePicker';
 import { Select } from '@components/Select';
 import { TextInput } from '@components/TextInput';
 import { Text } from '@components/ui/Text';
@@ -14,6 +15,8 @@ import { theme } from '@shared/theme';
 
 export default function CreatePage() {
   const [isOnDiet, setIsOnDiet] = useState<boolean | undefined>(undefined);
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedTime, setSelectedTime] = useState(new Date());
 
   const safeAreaInsets = useSafeAreaInsets();
   const router = useRouter();
@@ -45,20 +48,20 @@ export default function CreatePage() {
 
         <View style={styles.formTime}>
           <View style={{ flex: 1 }}>
-            <TextInput
+            <DatePicker
+              mode="date"
               label="Data"
-              placeholder="DD/MM/YYYY"
-              autoCapitalize="none"
-              autoCorrect={false}
+              value={selectedDate}
+              onChange={setSelectedDate}
             />
           </View>
 
           <View style={{ flex: 1 }}>
-            <TextInput
+            <DatePicker
+              mode="time"
               label="Hora"
-              placeholder="hh:mm"
-              autoCapitalize="none"
-              autoCorrect={false}
+              value={selectedTime}
+              onChange={setSelectedTime}
             />
           </View>
         </View>
