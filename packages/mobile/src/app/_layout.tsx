@@ -3,7 +3,9 @@ import {
   NunitoSans_700Bold,
 } from '@expo-google-fonts/nunito-sans';
 import { useFonts } from 'expo-font';
-import { SplashScreen, Slot } from 'expo-router';
+import { SplashScreen, Stack } from 'expo-router';
+
+import { theme } from '@shared/theme';
 
 export default function Layout() {
   const [fontsLoaded] = useFonts({
@@ -13,5 +15,12 @@ export default function Layout() {
 
   if (!fontsLoaded) return <SplashScreen />;
 
-  return <Slot />;
+  return (
+    <Stack
+      screenOptions={{
+        headerShown: false,
+        contentStyle: { backgroundColor: theme.colors.white },
+      }}
+    />
+  );
 }
