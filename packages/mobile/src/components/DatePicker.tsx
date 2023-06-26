@@ -6,6 +6,7 @@ import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { TextInput } from '@components/TextInput';
 
 import { Platform } from '@shared/platform';
+import { theme } from '@shared/theme';
 
 type Props = {
   value: Date;
@@ -48,9 +49,7 @@ export function DatePicker({ value, label, onChange, mode }: Props) {
   return (
     <View>
       <Pressable onPress={() => setShow(true)}>
-        <View pointerEvents="none">
-          <TextInput value={formattedDate} label={label} />
-        </View>
+        <TextInput pointerEvents="none" value={formattedDate} label={label} caretHidden />
       </Pressable>
 
       <DateTimePickerModal
@@ -58,6 +57,10 @@ export function DatePicker({ value, label, onChange, mode }: Props) {
         mode={mode}
         display={platformSettings.display}
         date={value}
+        themeVariant="light"
+        accentColor={theme.colors.green.dark}
+        confirmTextIOS="Confirmar"
+        cancelTextIOS="Cancelar"
         onConfirm={handleConfirm}
         onCancel={() => setShow(false)}
         modalStyleIOS={{ paddingBottom: 16 }}

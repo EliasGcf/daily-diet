@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import {
   StyleSheet,
   View,
@@ -12,26 +12,26 @@ import { theme } from '@shared/theme';
 
 type TextInputProps = RNTextInputProps & {
   label: string;
-  disabled?: boolean;
   onChange?: (text: string) => void;
 };
 
-export function TextInput({ label, onChange, disabled, ...rest }: TextInputProps) {
+export function TextInput({ label, onChange, pointerEvents, ...rest }: TextInputProps) {
   const [isFocused, setIsFocused] = useState(false);
+  const ref = useRef<RNTextInput>(null);
 
   function handleOnChangeText(text: string) {
     if (onChange) onChange(text);
   }
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} pointerEvents={pointerEvents}>
       <Text size="sm" weight="bold" color="gray.200">
         {label}
       </Text>
 
       <RNTextInput
         {...rest}
-        editable={!disabled}
+        ref={ref}
         placeholderTextColor={theme.colors.gray[400]}
         style={[
           styles.input,
