@@ -1,4 +1,5 @@
-import React, { useRef, useState } from 'react';
+import { useControllableState } from '@radix-ui/react-use-controllable-state';
+import React, { useEffect, useRef } from 'react';
 import {
   StyleSheet,
   View,
@@ -12,16 +13,36 @@ import { theme } from '@shared/theme';
 
 type TextInputProps = RNTextInputProps & {
   label: string;
+  isFocused?: boolean;
+  onFocusChange?: (focused: boolean) => void;
   onChange?: (text: string) => void;
 };
 
-export function TextInput({ label, onChange, pointerEvents, ...rest }: TextInputProps) {
-  const [isFocused, setIsFocused] = useState(false);
+export function TextInput({
+  label,
+  onChange,
+  pointerEvents,
+  isFocused: isFocusedProp,
+  onFocusChange,
+  ...rest
+}: TextInputProps) {
   const ref = useRef<RNTextInput>(null);
+  const [isFocused = false, setIsFocused] = useControllableState({
+    prop: isFocusedProp,
+    onChange: onFocusChange,
+  });
 
   function handleOnChangeText(text: string) {
     if (onChange) onChange(text);
   }
+
+  useEffect(() => {
+    if (isFocused) {
+      ref.current?.focus();
+    } else {
+      ref.current?.blur();
+    }
+  }, [isFocused]);
 
   return (
     <View style={styles.container} pointerEvents={pointerEvents}>

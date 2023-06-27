@@ -49,7 +49,14 @@ export function DatePicker({ value, label, onChange, mode }: Props) {
   return (
     <View>
       <Pressable onPress={() => setShow(true)}>
-        <TextInput pointerEvents="none" value={formattedDate} label={label} caretHidden />
+        <TextInput
+          pointerEvents="none"
+          value={formattedDate}
+          label={label}
+          caretHidden
+          isFocused={show}
+          showSoftInputOnFocus={false}
+        />
       </Pressable>
 
       <DateTimePickerModal

@@ -1,4 +1,5 @@
-import { createContext, useCallback, useContext, useMemo, useState } from 'react';
+import { useControllableState } from '@radix-ui/react-use-controllable-state';
+import { createContext, useContext, useMemo } from 'react';
 
 type DialogContextProps = {
   isOpen: boolean;
@@ -19,26 +20,18 @@ export function DialogProvider({
   onOpenChange,
   children,
 }: DialogProviderProps) {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const handleOpenChange = useCallback(
-    (newValue: boolean) => {
-      setIsOpen(newValue);
-
-      if (onOpenChange) {
-        onOpenChange(openFromProps !== undefined ? !openFromProps : newValue);
-      }
-    },
-    [onOpenChange, openFromProps],
-  );
+  const [isOpen = false, setIsOpen] = useControllableState({
+    prop: openFromProps,
+    onChange: onOpenChange,
+  });
 
   const value = useMemo(
     () => ({
       isOpen: openFromProps ?? isOpen,
-      onOpenChange: handleOpenChange,
-      handleClose: () => handleOpenChange(false),
+      onOpenChange: setIsOpen,
+      handleClose: () => setIsOpen(false),
     }),
-    [handleOpenChange, isOpen, openFromProps],
+    [isOpen, openFromProps, setIsOpen],
   );
 
   return <DialogContext.Provider value={value}>{children}</DialogContext.Provider>;
