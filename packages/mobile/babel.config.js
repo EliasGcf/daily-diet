@@ -1,5 +1,3 @@
-process.env.EXPO_ROUTER_APP_ROOT = '../../src/app';
-
 module.exports = (api) => {
   api.cache(true);
   return {

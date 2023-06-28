@@ -3,7 +3,7 @@ import {
   NunitoSans_700Bold,
 } from '@expo-google-fonts/nunito-sans';
 import { useFonts } from 'expo-font';
-import { SplashScreen, Stack } from 'expo-router';
+import { Stack } from 'expo-router';
 
 import { theme } from '@shared/theme';
 
@@ -13,7 +13,7 @@ export default function Layout() {
     NunitoSans_700Bold,
   });
 
-  if (!fontsLoaded) return <SplashScreen />;
+  if (!fontsLoaded) return null;
 
   return (
     <Stack
