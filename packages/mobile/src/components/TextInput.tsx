@@ -70,6 +70,7 @@ export function TextInput({
 const styles = StyleSheet.create({
   container: {
     gap: 4,
+    width: '100%',
   },
 
   input: {

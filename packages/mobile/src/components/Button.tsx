@@ -60,6 +60,7 @@ const baseStyles = StyleSheet.create({
   container: {
     borderRadius: 6,
     borderWidth: 1,
+    width: '100%',
   },
 
   button: {
