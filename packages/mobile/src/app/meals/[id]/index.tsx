@@ -1,4 +1,4 @@
-import { Link, useLocalSearchParams, useRouter } from 'expo-router';
+import { Link, router, useLocalSearchParams } from 'expo-router';
 import { ArrowLeft, Pencil, Trash } from 'phosphor-react-native';
 import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
@@ -14,16 +14,11 @@ import { Text } from '@components/ui/Text';
 import { MEALS } from '@shared/meals';
 import { theme } from '@shared/theme';
 
-type Params = {
-  id: string;
-};
-
 type Stage = 'dialog-open' | 'dialog-closed' | 'deleting';
 
 export default function ViewMeal() {
   const safeAreaInsets = useSafeAreaInsets();
-  const router = useRouter();
-  const params = useLocalSearchParams() as Params;
+  const params = useLocalSearchParams<'/meals/[id]/'>();
   const [stage, setStage] = useState<Stage>('dialog-closed');
 
   const meal = MEALS.find((fMeal) => fMeal.id === params.id);

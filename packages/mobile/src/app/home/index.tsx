@@ -29,7 +29,7 @@ export default function HomePage() {
         <Avatar url="https://github.com/eliasgcf.png" />
       </View>
 
-      <Link href="/statistics" asChild>
+      <Link href="/statistics/" asChild>
         <RectButton activeOpacity={0}>
           <Box brand={IS_ON_DIET ? 'green' : 'red'} icon={ArrowUpRight}>
             <Text weight="bold" size="3xl" color="gray.100">
@@ -45,7 +45,7 @@ export default function HomePage() {
 
       <View style={styles.listHeader}>
         <Text color="gray.100">Refeições</Text>
-        <Link asChild href="/create">
+        <Link asChild href="/create/">
           <Button title="Nova refeição" icon={Plus} />
         </Link>
       </View>
@@ -60,7 +60,7 @@ export default function HomePage() {
             index === 0 || item.date.getDate() !== MEALS[index - 1].date.getDate();
 
           const Item = (
-            <Link asChild href={`/meals/${item.id}`}>
+            <Link asChild href={`/meals/${item.id}/`}>
               <TouchableOpacity activeOpacity={0.7}>
                 <Meal meal={item} />
               </TouchableOpacity>

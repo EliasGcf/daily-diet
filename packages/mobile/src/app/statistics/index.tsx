@@ -1,4 +1,4 @@
-import { useRouter } from 'expo-router';
+import { router } from 'expo-router';
 import { ArrowLeft } from 'phosphor-react-native';
 import { StyleSheet, View } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
@@ -13,7 +13,6 @@ const IS_ON_DIET = true;
 
 export default function StatisticsPage() {
   const { top } = useSafeAreaInsets();
-  const router = useRouter();
 
   return (
     <View

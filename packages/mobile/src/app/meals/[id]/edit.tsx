@@ -1,4 +1,4 @@
-import { useLocalSearchParams, useRouter } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import { ArrowLeft } from 'phosphor-react-native';
 import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
@@ -21,7 +21,6 @@ type Params = {
 export default function EditPage() {
   const params = useLocalSearchParams() as Params;
   const safeAreaInsets = useSafeAreaInsets();
-  const router = useRouter();
 
   const meal = MEALS.find((fMeal) => fMeal.id === params.id)!;
 

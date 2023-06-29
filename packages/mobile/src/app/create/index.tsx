@@ -1,4 +1,4 @@
-import { useRouter } from 'expo-router';
+import { router } from 'expo-router';
 import { ArrowLeft } from 'phosphor-react-native';
 import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
@@ -18,7 +18,6 @@ export default function CreatePage() {
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   const safeAreaInsets = useSafeAreaInsets();
-  const router = useRouter();
 
   function handleDateChange(type: 'date' | 'time', date: Date) {
     const newDate = new Date(selectedDate);

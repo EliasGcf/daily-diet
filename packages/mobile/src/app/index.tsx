@@ -15,7 +15,7 @@ export default function Page() {
       <View style={styles.container}>
         <View style={styles.main}>
           <Avatar url="https://github.com/eliasgcf.png" />
-          <Link href="/home">Home</Link>
+          <Link href="/home/">Home</Link>
           <Link href="/login">Sign In</Link>
           <Link href="/signup">Sign Up</Link>
           <Box icon={ArrowUpRight}>

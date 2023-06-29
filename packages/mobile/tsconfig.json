@@ -8,5 +8,6 @@
       "@components/*": ["./src/components/*"],
       "@shared/*": ["./src/shared/*"]
     }
-  }
+  },
+  "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts"]
 }

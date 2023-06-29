@@ -47,7 +47,7 @@ const ITEMS = {
 };
 
 export default function FeedbackPage() {
-  const params = useLocalSearchParams();
+  const params = useLocalSearchParams() as { isOnDiet: string };
   const isOnDiet = JSON.parse(String(params.isOnDiet));
 
   const { title, headline, image } = ITEMS[isOnDiet ? 'true' : 'false'];
@@ -62,7 +62,7 @@ export default function FeedbackPage() {
       <Image source={image} style={styles.image} />
 
       <View>
-        <Link asChild href="/home">
+        <Link asChild href="/home/">
           <Button title="Ir para a página inicial" />
         </Link>
       </View>
