@@ -53,6 +53,7 @@
           "/^@app/",
           "/^@assets/",
           "/^@components/",
+          "/^@hooks/",
           "/^@shared/",
           ["parent", "sibling"],
           "index"

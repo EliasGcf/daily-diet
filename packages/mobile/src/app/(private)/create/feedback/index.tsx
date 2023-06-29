@@ -62,7 +62,7 @@ export default function FeedbackPage() {
       <Image source={image} style={styles.image} />
 
       <View>
-        <Link asChild href="/home/">
+        <Link asChild href="/">
           <Button title="Ir para a página inicial" />
         </Link>
       </View>

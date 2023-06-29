@@ -29,7 +29,7 @@ export default function HomePage() {
         <Avatar url="https://github.com/eliasgcf.png" />
       </View>
 
-      <Link href="/statistics/" asChild>
+      <Link href="/statistics" asChild>
         <RectButton activeOpacity={0}>
           <Box brand={IS_ON_DIET ? 'green' : 'red'} icon={ArrowUpRight}>
             <Text weight="bold" size="3xl" color="gray.100">
