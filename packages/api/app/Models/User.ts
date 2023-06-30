@@ -29,7 +29,7 @@ export default class User extends BaseModel {
   public password: string
 
   @column()
-  public avatar: string
+  public avatar?: string
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

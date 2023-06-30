@@ -15,18 +15,23 @@ import { Button } from '@components/Button';
 import { Meal } from '@components/Meal';
 import { Text } from '@components/ui/Text';
 
+import { useAuth } from '@hooks/useAuth';
+
 import { MEALS } from '@shared/meals';
 
 const IS_ON_DIET = true;
 
 export default function HomePage() {
+  const { signOut } = useAuth();
   const { top } = useSafeAreaInsets();
 
   return (
     <View style={[styles.container, { paddingTop: top + 12 }]}>
       <View style={styles.header}>
         <Logo />
-        <Avatar url="https://github.com/eliasgcf.png" />
+        <TouchableOpacity onPress={signOut}>
+          <Avatar url="https://github.com/eliasgcf.png" />
+        </TouchableOpacity>
       </View>
 
       <Link href="/statistics" asChild>

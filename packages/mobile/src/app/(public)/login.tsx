@@ -6,7 +6,15 @@ import { Button } from '@components/Button';
 import { KeyboardController } from '@components/KeyboardController';
 import { TextInput } from '@components/TextInput';
 
+import { useAuth } from '@hooks/useAuth';
+
 export default function LoginPage() {
+  const { signIn } = useAuth();
+
+  function handleSubmit() {
+    signIn({ email: 'teste', password: 'teste' });
+  }
+
   return (
     <KeyboardController>
       <View style={styles.container}>
@@ -14,7 +22,7 @@ export default function LoginPage() {
         <View style={styles.content}>
           <TextInput label="E-mail" placeholder="example@email.com" />
           <TextInput placeholder="••••••••" label="Senha" secureTextEntry />
-          <Button title="Entrar" />
+          <Button title="Entrar" onPress={handleSubmit} />
         </View>
       </View>
     </KeyboardController>

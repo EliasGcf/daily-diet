@@ -1,44 +1,68 @@
 import { router, useSegments } from 'expo-router';
-import { ReactNode, createContext, useContext, useEffect, useMemo } from 'react';
+import {
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 
 import { useAsyncStorage } from '@hooks/useAsyncStorage';
 
+type User = {
+  id: string;
+  name: string;
+  email: string;
+  avatar?: string;
+};
+
 type AuthContextProps = {
-  user?: boolean;
-  signIn: () => void;
-  signOut: () => void;
-  setUser: (value: boolean) => void;
+  user?: User | null;
+  token?: string | null;
+  signIn: (props: { email: string; password: string }) => Promise<void>;
+  signOut: () => Promise<void>;
 };
 
 const AuthContext = createContext({} as AuthContextProps);
 
-function useProtectedRoute(user: boolean) {
+export function AuthProvider({ children }: { children: ReactNode }) {
   const segments = useSegments();
 
-  useEffect(() => {
-    const inPublicGroup = segments[0] === '(public)';
+  const [user, setUser] = useState<User | null>(null);
+  const [token, setToken] = useAsyncStorage<string | null>('@DailyDiet:token', null);
 
-    if (!user && !inPublicGroup) {
-      router.replace('/login');
-    } else if (user && inPublicGroup) {
+  useEffect(() => {
+    // Simulate loading user data from API
+    async function loadUser() {
+      // eslint-disable-next-line no-promise-executor-return
+      await new Promise((resolve) => setTimeout(resolve, 1000));
       router.replace('/');
     }
-  }, [user, segments]);
-}
 
-export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useAsyncStorage('@DailyDiet:user', true);
+    const inPublicGroup = segments[0] === '(public)';
 
-  useProtectedRoute(!!user);
+    if (!token && !inPublicGroup) {
+      router.replace('/login');
+    } else if (token && inPublicGroup) {
+      loadUser();
+    }
+  }, [token, segments]);
 
   const value = useMemo(() => {
     return {
-      signIn: () => setUser(true),
-      signOut: () => setUser(false),
-      setUser,
+      signIn: async () => {
+        setUser({} as User);
+        setToken('token');
+      },
+      signOut: async () => {
+        setUser(null);
+        setToken(null);
+      },
       user,
+      token,
     };
-  }, [setUser, user]);
+  }, [setToken, setUser, token, user]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
