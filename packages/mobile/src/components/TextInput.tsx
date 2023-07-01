@@ -5,15 +5,18 @@ import {
   View,
   TextInput as RNTextInput,
   TextInputProps as RNTextInputProps,
+  TextInputFocusEventData,
+  NativeSyntheticEvent,
 } from 'react-native';
 
 import { Text } from '@components/ui/Text';
 
 import { theme } from '@shared/theme';
 
-type TextInputProps = RNTextInputProps & {
+type TextInputProps = Omit<RNTextInputProps, 'onChange'> & {
   label: string;
   isFocused?: boolean;
+  error?: string;
   onFocusChange?: (focused: boolean) => void;
   onChange?: (text: string) => void;
 };
@@ -24,6 +27,8 @@ export function TextInput({
   pointerEvents,
   isFocused: isFocusedProp,
   onFocusChange,
+  error,
+  onBlur,
   ...rest
 }: TextInputProps) {
   const ref = useRef<RNTextInput>(null);
@@ -34,6 +39,12 @@ export function TextInput({
 
   function handleOnChangeText(text: string) {
     if (onChange) onChange(text);
+  }
+
+  function handleOnBlur(event: NativeSyntheticEvent<TextInputFocusEventData>) {
+    setIsFocused(false);
+
+    if (onBlur) onBlur(event);
   }
 
   useEffect(() => {
@@ -56,13 +67,22 @@ export function TextInput({
         placeholderTextColor={theme.colors.gray[400]}
         style={[
           styles.input,
-          isFocused && styles.focused,
           rest.multiline && styles.multilineInput,
+          {
+            ...(error && styles.error),
+            ...(isFocused && styles.focused),
+          },
         ]}
         onFocus={() => setIsFocused(true)}
-        onBlur={() => setIsFocused(false)}
+        onBlur={handleOnBlur}
         onChangeText={handleOnChangeText}
       />
+
+      {error && (
+        <Text size="sm" color="red.dark">
+          {error}
+        </Text>
+      )}
     </View>
   );
 }
@@ -91,5 +111,9 @@ const styles = StyleSheet.create({
 
   focused: {
     borderColor: theme.colors.gray[300],
+  },
+
+  error: {
+    borderColor: theme.colors.red.dark,
   },
 });
