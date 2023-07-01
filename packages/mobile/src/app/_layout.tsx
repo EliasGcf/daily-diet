@@ -4,7 +4,8 @@ import {
 } from '@expo-google-fonts/nunito-sans';
 import { useFonts } from 'expo-font';
 import { SplashScreen, Stack } from 'expo-router';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { View } from 'react-native';
 
 import { AuthProvider } from '@hooks/useAuth';
 
@@ -13,6 +14,8 @@ import { theme } from '@shared/theme';
 SplashScreen.preventAutoHideAsync();
 
 export default function Layout() {
+  const [canRedirect, setCanRedirect] = useState(false);
+
   const [fontsLoaded] = useFonts({
     NunitoSans_400Regular,
     NunitoSans_700Bold,
@@ -27,13 +30,15 @@ export default function Layout() {
   if (!fontsLoaded) return null;
 
   return (
-    <AuthProvider>
-      <Stack
-        screenOptions={{
-          headerShown: false,
-          contentStyle: { backgroundColor: theme.colors.white },
-        }}
-      />
+    <AuthProvider canRedirect={canRedirect}>
+      <View style={{ flex: 1 }} onLayout={() => setCanRedirect(true)}>
+        <Stack
+          screenOptions={{
+            headerShown: false,
+            contentStyle: { backgroundColor: theme.colors.white },
+          }}
+        />
+      </View>
     </AuthProvider>
   );
 }

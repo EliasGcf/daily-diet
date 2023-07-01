@@ -26,7 +26,13 @@ type AuthContextProps = {
 
 const AuthContext = createContext({} as AuthContextProps);
 
-export function AuthProvider({ children }: { children: ReactNode }) {
+export function AuthProvider({
+  children,
+  canRedirect,
+}: {
+  children: ReactNode;
+  canRedirect: boolean;
+}) {
   const segments = useSegments();
 
   const [user, setUser] = useState<User | null>(null);
@@ -42,12 +48,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     const inPublicGroup = segments[0] === '(public)';
 
-    if (!token && !inPublicGroup) {
+    if (!token && !inPublicGroup && canRedirect) {
       router.replace('/login');
-    } else if (token && inPublicGroup) {
+    } else if (token && inPublicGroup && canRedirect) {
       loadUser();
     }
-  }, [token, segments]);
+  }, [token, segments, canRedirect]);
 
   const value = useMemo(() => {
     return {
