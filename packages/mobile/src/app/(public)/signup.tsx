@@ -1,3 +1,4 @@
+import { Link } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
 
 import LogoSvg from '@assets/logo.svg';
@@ -15,7 +16,10 @@ export default function SignUpPage() {
           <TextInput label="E-mail" placeholder="example@email.com" />
           <TextInput placeholder="••••••••" label="Senha" secureTextEntry />
           <TextInput placeholder="••••••••" label="Confirme a senha" secureTextEntry />
-          <Button title="Cadastrar" variant="outline" />
+          <Button title="Cadastrar" />
+          <Link asChild href="/login" replace>
+            <Button variant="outline" title="Já tenho conta" />
+          </Link>
         </View>
       </View>
     </KeyboardController>

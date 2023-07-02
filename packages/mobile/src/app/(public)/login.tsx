@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Link } from 'expo-router';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { StyleSheet, View } from 'react-native';
@@ -73,6 +74,9 @@ export default function LoginPage() {
             title="Entrar"
             onPress={() => form.handleSubmit(handleSubmit)()}
           />
+          <Link asChild href="/signup" replace>
+            <Button variant="outline" isLoading={isLoading} title="Não tenho conta" />
+          </Link>
         </View>
       </View>
     </KeyboardController>
