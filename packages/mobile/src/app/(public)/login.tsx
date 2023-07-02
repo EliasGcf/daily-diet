@@ -34,13 +34,20 @@ export default function LoginPage() {
   });
 
   async function handleSubmit(formData: FormData) {
-    setIsLoading(true);
-    await signIn({
-      email: formData.email,
-      password: formData.password,
-    });
-    setIsLoading(false);
-    form.reset();
+    try {
+      setIsLoading(true);
+
+      await signIn({
+        email: formData.email,
+        password: formData.password,
+      });
+
+      form.reset();
+    } catch {
+      // TODO: handle error
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (
