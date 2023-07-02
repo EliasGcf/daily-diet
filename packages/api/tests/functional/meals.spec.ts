@@ -14,10 +14,7 @@ test.group('MealsController', (group) => {
     const user = await UserFactory.create()
     const fakeMeal = await MealFactory.make()
 
-    const response = await client
-      .post('/meals')
-      .fields(fakeMeal.serialize())
-      .loginAs(user)
+    const response = await client.post('/meals').json(fakeMeal.serialize()).loginAs(user)
 
     response.assertStatus(201)
   })
@@ -33,11 +30,11 @@ test.group('MealsController', (group) => {
   test('should be able to update a meal', async ({ client }) => {
     const meal = await MealFactory.with('user', 1).create()
 
-    const response = await client.put(`/meals/${meal.id}`).loginAs(meal.user).fields({
+    const response = await client.put(`/meals/${meal.id}`).loginAs(meal.user).json({
       name: 'New name',
       description: 'New description',
       isOnDiet: false,
-      createdAt: meal.createdAt.toISO()!,
+      date: meal.date.toISO()!,
     })
 
     response.assertStatus(200)

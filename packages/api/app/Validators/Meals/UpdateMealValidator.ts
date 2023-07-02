@@ -27,7 +27,7 @@ export default class UpdateMealValidator {
     name: schema.string(),
     description: schema.string(),
     isOnDiet: schema.boolean(),
-    createdAt: schema.date(),
+    date: schema.date(),
   })
 
   /**

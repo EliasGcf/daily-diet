@@ -18,7 +18,13 @@ test.group('Create meal', (group) => {
     const user = await UserFactory.create()
     const fakeMeal = await MealFactory.merge({ userId: user.id }).make()
 
-    const meal = await sut.execute(fakeMeal)
+    const meal = await sut.execute({
+      name: fakeMeal.name,
+      description: fakeMeal.description,
+      isOnDiet: fakeMeal.isOnDiet,
+      date: fakeMeal.date.toJSDate()!,
+      userId: user.id,
+    })
 
     assert.isTrue(meal.$isPersisted)
   })
@@ -28,6 +34,14 @@ test.group('Create meal', (group) => {
   }) => {
     const fakeMeal = await MealFactory.make()
 
-    assert.rejects(() => sut.execute(fakeMeal))
+    assert.rejects(() =>
+      sut.execute({
+        name: fakeMeal.name,
+        description: fakeMeal.description,
+        isOnDiet: fakeMeal.isOnDiet,
+        date: fakeMeal.date.toJSDate()!,
+        userId: fakeMeal.userId,
+      }),
+    )
   })
 })

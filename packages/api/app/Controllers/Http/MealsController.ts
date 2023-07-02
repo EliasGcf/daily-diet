@@ -21,13 +21,16 @@ export default class MealsController {
   ) {}
 
   public async store({ request, response, auth }: HttpContextContract) {
-    const { name, description, isOnDiet } = await request.validate(CreateMealValidator)
+    const { name, description, isOnDiet, date } = await request.validate(
+      CreateMealValidator,
+    )
 
     const meal = await this.createMealService.execute({
       userId: auth.user?.id!,
       name,
       description,
       isOnDiet,
+      date: date.toJSDate(),
     })
 
     return response.status(201).send(meal)
@@ -47,7 +50,7 @@ export default class MealsController {
   public async update({ request, auth }: HttpContextContract) {
     const { id } = request.params()
 
-    const { name, description, isOnDiet, createdAt } = await request.validate(
+    const { name, description, isOnDiet, date } = await request.validate(
       UpdateMealValidator,
     )
 
@@ -57,7 +60,7 @@ export default class MealsController {
       name,
       description,
       isOnDiet,
-      createdAt: createdAt.toJSDate(),
+      date: date.toJSDate(),
     })
 
     return meal

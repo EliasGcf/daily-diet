@@ -29,6 +29,9 @@ export default class Meal extends BaseModel {
   @column({ serialize: (value) => Boolean(value) })
   public isOnDiet: boolean
 
+  @column.dateTime({ serialize: (value: DateTime) => value.toJSDate() })
+  public date: DateTime
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 

@@ -14,7 +14,7 @@ test.group('Auth', (group) => {
 
     await UserFactory.merge({ email: user.email, password: user.password }).create()
 
-    const response = await client.post('/login').fields({
+    const response = await client.post('/login').json({
       email: user.email,
       password: user.password,
     })
@@ -27,7 +27,7 @@ test.group('Auth', (group) => {
   }) => {
     const user = await UserFactory.make()
 
-    const response = await client.post('/login').fields({
+    const response = await client.post('/login').json({
       email: user.email,
       password: user.password,
     })

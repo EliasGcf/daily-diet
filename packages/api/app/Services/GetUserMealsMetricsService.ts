@@ -10,7 +10,7 @@ export default class GetUserMealsMetricsService {
   public async execute({ userId }: GetUserMealsMetricsServiceRequest) {
     const user = await User.query()
       .where('id', userId)
-      .preload('meals', (query) => query.orderBy('created_at', 'asc'))
+      .preload('meals', (query) => query.orderBy('date', 'asc'))
       .first()
 
     if (!user) {

@@ -10,7 +10,7 @@ test.group('UsersController', (group) => {
   })
 
   test('should be able to create an user', async ({ client }) => {
-    const response = await client.post('/users').fields({
+    const response = await client.post('/users').json({
       name: 'John Doe',
       email: 'johnDoe@example.com',
       password: '123456',

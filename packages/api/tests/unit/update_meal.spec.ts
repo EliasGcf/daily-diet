@@ -27,7 +27,7 @@ test.group('Update meal', (group) => {
       userId: meal.user.id,
 
       name: fakeMeal.name,
-      createdAt: fakeMeal.createdAt.toJSDate(),
+      date: fakeMeal.createdAt.toJSDate(),
       description: fakeMeal.description,
       isOnDiet: fakeMeal.isOnDiet,
     })
@@ -49,7 +49,7 @@ test.group('Update meal', (group) => {
         userId: user.id,
 
         name: fakeMeal.name,
-        createdAt: fakeMeal.createdAt.toJSDate(),
+        date: fakeMeal.createdAt.toJSDate(),
         description: fakeMeal.description,
         isOnDiet: fakeMeal.isOnDiet,
       }),
@@ -68,7 +68,7 @@ test.group('Update meal', (group) => {
         userId: 'invalid-user-id',
 
         name: fakeMeal.name,
-        createdAt: fakeMeal.createdAt.toJSDate(),
+        date: fakeMeal.createdAt.toJSDate(),
         description: fakeMeal.description,
         isOnDiet: fakeMeal.isOnDiet,
       }),

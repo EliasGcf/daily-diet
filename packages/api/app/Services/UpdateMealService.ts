@@ -11,7 +11,7 @@ interface UpdateMealServiceRequest {
   name: string
   description: string
   isOnDiet: boolean
-  createdAt: Date
+  date: Date
 }
 
 export default class UpdateMealService {
@@ -21,7 +21,7 @@ export default class UpdateMealService {
     name,
     description,
     isOnDiet,
-    createdAt,
+    date,
   }: UpdateMealServiceRequest) {
     const meal = await Meal.find(id)
 
@@ -36,7 +36,7 @@ export default class UpdateMealService {
     meal.name = name
     meal.description = description
     meal.isOnDiet = isOnDiet
-    meal.createdAt = DateTime.fromJSDate(createdAt)
+    meal.date = DateTime.fromJSDate(date)
 
     await meal.save()
 

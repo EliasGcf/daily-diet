@@ -1,3 +1,5 @@
+import { DateTime } from 'luxon'
+
 import NotFoundException from 'App/Exceptions/NotFoundException'
 
 import Meal from 'App/Models/Meal'
@@ -8,6 +10,7 @@ interface CreateMealServiceRequest {
   name: string
   description: string
   isOnDiet: boolean
+  date: Date
 }
 
 export default class CreateMealService {
@@ -16,6 +19,7 @@ export default class CreateMealService {
     name,
     description,
     isOnDiet,
+    date,
   }: CreateMealServiceRequest) {
     const user = await User.find(userId)
 
@@ -28,6 +32,7 @@ export default class CreateMealService {
       name,
       description,
       isOnDiet,
+      date: DateTime.fromJSDate(date),
     })
 
     return meal

@@ -15,6 +15,7 @@ export default class extends BaseSchema {
       table.string('name').notNullable()
       table.string('description').notNullable()
       table.boolean('is_on_diet').notNullable()
+      table.datetime('date').notNullable()
 
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
