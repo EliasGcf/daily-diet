@@ -15,7 +15,7 @@ import { Button } from '@components/Button';
 import { Meal } from '@components/Meal';
 import { Text } from '@components/ui/Text';
 
-import { useAuth } from '@hooks/useAuth';
+import { useAuth, useUser } from '@hooks/useAuth';
 
 import { MEALS } from '@shared/meals';
 
@@ -23,15 +23,23 @@ const IS_ON_DIET = true;
 
 export default function HomePage() {
   const { signOut } = useAuth();
+  const user = useUser();
   const { top } = useSafeAreaInsets();
+
+  const avatarURL =
+    user.avatar || `https://ui-avatars.com/api/?background=EFF0F0&name=${user.name}`;
 
   return (
     <View style={[styles.container, { paddingTop: top + 12 }]}>
       <View style={styles.header}>
         <Logo />
-        <TouchableOpacity onPress={signOut}>
-          <Avatar url="https://github.com/eliasgcf.png" />
-        </TouchableOpacity>
+        <View style={styles.profile}>
+          <Text weight="bold">{user.name.split(' ')[0]}</Text>
+
+          <TouchableOpacity onPress={signOut}>
+            <Avatar url={avatarURL} />
+          </TouchableOpacity>
+        </View>
       </View>
 
       <Link href="/statistics" asChild>
@@ -102,6 +110,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 32,
+  },
+
+  profile: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
   },
 
   listHeader: {

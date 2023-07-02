@@ -16,6 +16,7 @@
     "@react-native-async-storage/async-storage": "1.18.2",
     "@react-native-community/datetimepicker": "7.2.0",
     "@shopify/flash-list": "1.4.3",
+    "axios": "^1.4.0",
     "dayjs": "^1.11.8",
     "dot-path-value": "^0.0.10",
     "expo": "49.0.0-beta.0",

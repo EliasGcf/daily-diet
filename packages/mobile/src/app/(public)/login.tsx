@@ -40,6 +40,7 @@ export default function LoginPage() {
       password: formData.password,
     });
     setIsLoading(false);
+    form.reset();
   }
 
   return (
@@ -48,6 +49,7 @@ export default function LoginPage() {
         <LogoSvg width={300} height={60} />
         <View style={styles.content}>
           <Form.TextInput
+            editable={!isLoading}
             label="E-mail"
             name="email"
             control={form.control}
@@ -63,6 +65,7 @@ export default function LoginPage() {
             control={form.control}
             placeholder="••••••••"
             label="Senha"
+            editable={!isLoading}
             autoCapitalize="none"
             autoComplete="off"
             autoCorrect={false}
@@ -75,7 +78,7 @@ export default function LoginPage() {
             onPress={() => form.handleSubmit(handleSubmit)()}
           />
           <Link asChild href="/signup" replace>
-            <Button variant="outline" isLoading={isLoading} title="Não tenho conta" />
+            <Button variant="outline" enabled={!isLoading} title="Não tenho conta" />
           </Link>
         </View>
       </View>

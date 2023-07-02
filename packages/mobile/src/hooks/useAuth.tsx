@@ -1,4 +1,5 @@
-import { router, useSegments } from 'expo-router';
+import { api } from '@lib/api';
+import { router, usePathname, useSegments } from 'expo-router';
 import {
   ReactNode,
   createContext,
@@ -34,45 +35,58 @@ export function AuthProvider({
   canRedirect: boolean;
 }) {
   const segments = useSegments();
+  const pathname = usePathname();
 
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useAsyncStorage<string | null>('@DailyDiet:token', null);
 
   useEffect(() => {
-    // Simulate loading user data from API
     async function loadUser() {
       if (!user) {
-        // eslint-disable-next-line no-promise-executor-return
-        await new Promise((resolve) => setTimeout(resolve, 1000));
+        const response = await api.get('/me');
+
+        setUser({
+          id: response.data.id,
+          name: response.data.name,
+          email: response.data.email,
+          avatar: response.data.avatar,
+        });
       }
+
       router.replace('/home');
     }
 
-    const inPublicGroup = segments[0] === '(public)';
+    const inPrivateGroup = segments[0] === '(private)';
+    const inSplashScreen = pathname === '/';
 
-    if (!token && !inPublicGroup && canRedirect) {
+    if (!token && (inPrivateGroup || inSplashScreen) && canRedirect) {
+      setUser(null);
       router.replace('/login');
-    } else if (token && inPublicGroup && canRedirect) {
+    } else if (token && !inPrivateGroup && canRedirect) {
+      api.defaults.headers.authorization = `Bearer ${token}`;
+
       loadUser();
     }
-  }, [token, segments, canRedirect, user]);
+  }, [token, segments, canRedirect, user, pathname]);
 
-  const value = useMemo(() => {
+  const value = useMemo<AuthContextProps>(() => {
     return {
-      signIn: async () => {
-        // eslint-disable-next-line no-promise-executor-return
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-        setUser({} as User);
-        setToken('token');
+      signIn: async ({ email, password }) => {
+        const response = await api.post('/login', { email, password });
+
+        setToken(response.data.token);
       },
       signOut: async () => {
-        setUser(null);
-        setToken(null);
+        try {
+          await api.post('/logout');
+        } finally {
+          setToken(null);
+        }
       },
       user,
       token,
     };
-  }, [setToken, setUser, token, user]);
+  }, [setToken, token, user]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
@@ -85,4 +99,17 @@ export function useAuth() {
   }
 
   return context;
+}
+
+/**
+ * This hook should be use only when you want to make sure that user is logged in
+ */
+export function useUser() {
+  const { user } = useAuth();
+
+  if (!user) {
+    throw new Error('useUser must be used when user is logged in');
+  }
+
+  return user;
 }

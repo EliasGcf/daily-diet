@@ -42,7 +42,9 @@ export function Button({
         style={baseStyles.button}
       >
         {isLoading ? (
-          <ActivityIndicator color={theme.colors.green.mid} />
+          <ActivityIndicator
+            color={isPrimary ? theme.colors.green.mid : theme.colors.green.dark}
+          />
         ) : (
           <>
             {Icon && <Icon size={18} color={iconColor} style={{ marginRight: 12 }} />}

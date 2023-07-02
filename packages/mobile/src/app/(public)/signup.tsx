@@ -1,5 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { api } from '@lib/api';
 import { Link } from 'expo-router';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { StyleSheet, View } from 'react-native';
 import { z } from 'zod';
@@ -10,8 +12,13 @@ import { Button } from '@components/Button';
 import { Form } from '@components/Form';
 import { KeyboardController } from '@components/KeyboardController';
 
+import { useAuth } from '@hooks/useAuth';
+
 const formSchema = z
   .object({
+    name: z
+      .string({ required_error: 'Nome é obrigatório' })
+      .nonempty('Nome é obrigatório'),
     email: z
       .string({ required_error: 'E-mail é obrigatório' })
       .email('E-mail inválido')
@@ -31,12 +38,34 @@ const formSchema = z
 type FormData = z.infer<typeof formSchema>;
 
 export default function SignUpPage() {
+  const { signIn } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
+
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
   });
 
-  function handleSubmit(formData: FormData) {
-    console.log('SignUpPage ~ formData:', formData);
+  async function handleSubmit(formData: FormData) {
+    try {
+      setIsLoading(true);
+
+      await api.post('/users', {
+        name: formData.name,
+        email: formData.email,
+        password: formData.password,
+      });
+
+      form.reset();
+
+      await signIn({
+        email: formData.email,
+        password: formData.password,
+      });
+    } catch {
+      // TODO: handle error
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (
@@ -44,6 +73,15 @@ export default function SignUpPage() {
       <View style={styles.container}>
         <LogoSvg width={300} height={60} />
         <View style={styles.content}>
+          <Form.TextInput
+            label="Nome"
+            name="name"
+            control={form.control}
+            autoComplete="name"
+            placeholder="John Doe"
+            returnKeyType="default"
+            onSubmitEditing={() => form.handleSubmit(handleSubmit)()}
+          />
           <Form.TextInput
             label="E-mail"
             name="email"
@@ -70,16 +108,20 @@ export default function SignUpPage() {
             name="passwordConfirmation"
             control={form.control}
             placeholder="••••••••"
-            label="Senha"
+            label="Confirmação da senha"
             autoCapitalize="none"
             autoComplete="off"
             autoCorrect={false}
             secureTextEntry
             onSubmitEditing={() => form.handleSubmit(handleSubmit)()}
           />
-          <Button title="Cadastrar" onPress={() => form.handleSubmit(handleSubmit)()} />
+          <Button
+            isLoading={isLoading}
+            title="Cadastrar"
+            onPress={() => form.handleSubmit(handleSubmit)()}
+          />
           <Link asChild href="/login" replace>
-            <Button variant="outline" title="Já tenho conta" />
+            <Button isLoading={isLoading} variant="outline" title="Já tenho conta" />
           </Link>
         </View>
       </View>
