@@ -38,7 +38,6 @@ const styles = StyleSheet.create({
   centerModal: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
     paddingHorizontal: 24,
   },
 });

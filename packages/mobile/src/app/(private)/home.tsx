@@ -2,7 +2,7 @@ import { FlashList } from '@shopify/flash-list';
 import dayjs from 'dayjs';
 import { Link } from 'expo-router';
 import { ArrowUpRight, Plus } from 'phosphor-react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -12,6 +12,8 @@ import Logo from '@assets/logo.svg';
 import { Avatar } from '@components/Avatar';
 import { Box } from '@components/Box';
 import { Button } from '@components/Button';
+import { ConfirmDialog } from '@components/ConfirmDialog';
+import { Dialog } from '@components/Dialog';
 import { Meal } from '@components/Meal';
 import { Text } from '@components/ui/Text';
 
@@ -22,6 +24,8 @@ import { MEALS } from '@shared/meals';
 const IS_ON_DIET = true;
 
 export default function HomePage() {
+  const [dialogOpen, setDialogOpen] = useState<'signout' | null>(null);
+
   const { signOut } = useAuth();
   const user = useUser();
   const { top } = useSafeAreaInsets();
@@ -33,13 +37,27 @@ export default function HomePage() {
     <View style={[styles.container, { paddingTop: top + 12 }]}>
       <View style={styles.header}>
         <Logo />
-        <View style={styles.profile}>
-          <Text weight="bold">{user.name.split(' ')[0]}</Text>
 
-          <TouchableOpacity onPress={signOut}>
+        <Dialog.Root
+          open={dialogOpen === 'signout'}
+          onOpenChange={(isOpen) => setDialogOpen(isOpen ? 'signout' : null)}
+        >
+          <Dialog.Trigger style={styles.profile}>
+            <Text weight="bold">{user.name.split(' ')[0]}</Text>
             <Avatar url={avatarURL} />
-          </TouchableOpacity>
-        </View>
+          </Dialog.Trigger>
+
+          <Dialog.Portal center>
+            <ConfirmDialog
+              title="Deseja realmente sair?"
+              confirmText="Sim, sair"
+              onConfirm={() => {
+                signOut();
+                setDialogOpen(null);
+              }}
+            />
+          </Dialog.Portal>
+        </Dialog.Root>
       </View>
 
       <Link href="/statistics" asChild>

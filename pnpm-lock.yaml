@@ -165,6 +165,9 @@ importers:
       dot-path-value:
         specifier: ^0.0.10
         version: 0.0.10
+      exhaustive:
+        specifier: ^1.1.1
+        version: 1.1.1
       expo:
         specifier: 49.0.0-beta.0
         version: 49.0.0-beta.0(@babel/core@7.22.5)
@@ -6604,6 +6607,10 @@ packages:
       signal-exit: 3.0.7
       strip-final-newline: 3.0.0
     dev: true
+
+  /exhaustive@1.1.1:
+    resolution: {integrity: sha512-Fisyq6nCqwshk7GqqcalFrxxZErvNFVQLUluTXFFlMZ9rbBzboNET54mQJjHuyiFju7s6fxstpdPlDwJjPY71Q==}
+    dev: false
 
   /expand-brackets@2.1.4:
     resolution: {integrity: sha512-w/ozOKR9Obk3qoWeY/WDi6MFta9AoMR+zud60mdnbniMcBxRuFJyDt2LdX/14A1UABeqk+Uk+LDfUpvoGKppZA==}

@@ -1,3 +1,4 @@
+import { exhaustive } from 'exhaustive';
 import type { Icon as PhosphorIcon } from 'phosphor-react-native';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { RectButton, RectButtonProps } from 'react-native-gesture-handler';
@@ -6,8 +7,8 @@ import { Text } from '@components/ui/Text';
 
 import { theme } from '@shared/theme';
 
-type ButtonProps = Omit<RectButtonProps, 'style'> & {
-  variant?: 'primary' | 'outline';
+export type ButtonProps = Omit<RectButtonProps, 'style'> & {
+  variant?: 'primary' | 'outline' | 'danger';
   title: string;
   icon?: PhosphorIcon;
   isLoading?: boolean;
@@ -21,34 +22,57 @@ export function Button({
   ...rest
 }: ButtonProps) {
   const Icon = icon;
-  const isPrimary = variant === 'primary';
 
-  const iconColor = isPrimary ? theme.colors.white : theme.colors.gray[100];
-  const activeColor = isPrimary ? theme.colors.gray[100] : theme.colors.gray[500];
-  const styles = isPrimary ? primaryStyles : outlineStyles;
+  const variantProps = exhaustive(variant, {
+    primary: () => ({
+      styles: primaryStyles,
+      textColor: theme.colors.white,
+      iconColor: theme.colors.white,
+      activeColor: theme.colors.gray[100],
+      loadingColor: theme.colors.green.mid,
+    }),
+    outline: () => ({
+      styles: outlineStyles,
+      textColor: theme.colors.gray[100],
+      iconColor: theme.colors.gray[100],
+      activeColor: theme.colors.gray[500],
+      loadingColor: theme.colors.green.dark,
+    }),
+    danger: () => ({
+      styles: dangerStyles,
+      textColor: theme.colors.red.dark,
+      iconColor: theme.colors.red.dark,
+      activeColor: theme.colors.red.mid,
+      loadingColor: theme.colors.red.dark,
+    }),
+  });
 
   return (
     <View
       style={[
         baseStyles.container,
-        styles.container,
+        variantProps.styles.container,
         (rest.enabled === false || isLoading) && baseStyles.disabled,
       ]}
     >
       <RectButton
         {...rest}
-        underlayColor={activeColor}
+        underlayColor={variantProps.activeColor}
         activeOpacity={1}
         style={baseStyles.button}
       >
         {isLoading ? (
-          <ActivityIndicator
-            color={isPrimary ? theme.colors.green.mid : theme.colors.green.dark}
-          />
+          <ActivityIndicator color={variantProps.loadingColor} />
         ) : (
           <>
-            {Icon && <Icon size={18} color={iconColor} style={{ marginRight: 12 }} />}
-            <Text size="sm" weight="bold" color={isPrimary ? 'white' : 'gray.100'}>
+            {Icon && (
+              <Icon
+                size={18}
+                color={variantProps.iconColor}
+                style={{ marginRight: 12 }}
+              />
+            )}
+            <Text size="sm" weight="bold" color={variantProps.textColor}>
               {title}
             </Text>
           </>
@@ -90,5 +114,12 @@ const outlineStyles = StyleSheet.create({
   container: {
     backgroundColor: theme.colors.white,
     borderColor: theme.colors.gray[100],
+  },
+});
+
+const dangerStyles = StyleSheet.create({
+  container: {
+    backgroundColor: theme.colors.red.light,
+    borderColor: theme.colors.red.dark,
   },
 });

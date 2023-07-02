@@ -6,7 +6,7 @@ import { RectButton } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Button } from '@components/Button';
-import { ConfirmDeleteDialog } from '@components/ConfirmDeleteDialog';
+import { ConfirmDialog } from '@components/ConfirmDialog';
 import { Dialog } from '@components/Dialog';
 import { Tag } from '@components/Tag';
 import { Text } from '@components/ui/Text';
@@ -18,7 +18,7 @@ type Stage = 'dialog-open' | 'dialog-closed' | 'deleting';
 
 export default function ViewMeal() {
   const safeAreaInsets = useSafeAreaInsets();
-  const params = useLocalSearchParams<'/meals/[id]/'>();
+  const params = useLocalSearchParams<'/(private)/meals/[id]/'>();
   const [stage, setStage] = useState<Stage>('dialog-closed');
 
   const meal = MEALS.find((fMeal) => fMeal.id === params.id);
@@ -90,7 +90,11 @@ export default function ViewMeal() {
             onOpenChange={(isOpen) => setStage(isOpen ? 'dialog-open' : 'dialog-closed')}
           >
             <Dialog.Portal center>
-              <ConfirmDeleteDialog handleConfirm={handleDelete} />
+              <ConfirmDialog
+                title="Deseja realmente excluir o registro da refeição?"
+                confirmText="Sim, excluir"
+                onConfirm={handleDelete}
+              />
             </Dialog.Portal>
 
             <Dialog.Trigger asChild>

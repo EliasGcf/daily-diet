@@ -3,7 +3,7 @@ import { Text as RNText, TextProps as RNTextProps, StyleSheet } from 'react-nati
 
 import { Theme, theme } from '../../shared/theme';
 
-type TextProps = RNTextProps & {
+export type TextProps = RNTextProps & {
   /**
    * @default md
    */
@@ -15,7 +15,8 @@ type TextProps = RNTextProps & {
   /**
    * @default gray.200
    */
-  color?: Exclude<Path<Theme['colors']>, 'red' | 'green' | 'gray'>;
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  color?: Exclude<Path<Theme['colors']>, 'red' | 'green' | 'gray'> | (string & {});
 };
 
 export function Text({
@@ -30,7 +31,7 @@ export function Text({
       style={[
         styles.base,
         weight && styles[weight],
-        color && { color: getByPath(theme.colors, color) },
+        color && { color: getByPath(theme.colors, color as any) ?? color },
         { fontSize: typeof size === 'number' ? size : theme.fontSizes[size] },
         style,
       ]}

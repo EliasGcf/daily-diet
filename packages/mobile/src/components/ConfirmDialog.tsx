@@ -1,34 +1,52 @@
 import { Pressable, StyleSheet, View } from 'react-native';
 
-import { Button } from '@components/Button';
+import { Button, ButtonProps } from '@components/Button';
 import { Dialog } from '@components/Dialog';
 import { Text } from '@components/ui/Text';
 
 import { theme } from '@shared/theme';
 
 type Props = {
-  handleConfirm: () => void;
+  onConfirm: () => void;
+  onCancel?: () => void;
+  title: string;
+  cancelText?: string;
+  cancelVariant?: ButtonProps['variant'];
+  confirmVariant?: ButtonProps['variant'];
+  confirmText: string;
 };
 
-export function ConfirmDeleteDialog({ handleConfirm }: Props) {
+export function ConfirmDialog({
+  title,
+  cancelText,
+  cancelVariant = 'outline',
+  confirmVariant = 'danger',
+  confirmText,
+  onConfirm,
+  onCancel,
+}: Props) {
   return (
     <Dialog.Content style={styles.content}>
       <Text size="lg" weight="bold" color="gray.200" style={styles.title}>
-        Deseja realmente excluir o registro da refeição?
+        {title}
       </Text>
 
       <View style={styles.footer}>
         <View style={styles.button}>
           <Dialog.Close asChild>
             <Pressable>
-              <Button variant="outline" title="Cancelar" />
+              <Button
+                onPress={onCancel}
+                variant={cancelVariant}
+                title={cancelText ?? 'Cancelar'}
+              />
             </Pressable>
           </Dialog.Close>
         </View>
 
         <View style={styles.button}>
-          <Pressable onPress={handleConfirm}>
-            <Button variant="primary" title="Sim, excluir" />
+          <Pressable onPress={onConfirm}>
+            <Button variant={confirmVariant} title={confirmText} />
           </Pressable>
         </View>
       </View>

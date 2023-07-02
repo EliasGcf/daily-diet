@@ -19,6 +19,7 @@
     "axios": "^1.4.0",
     "dayjs": "^1.11.8",
     "dot-path-value": "^0.0.10",
+    "exhaustive": "^1.1.1",
     "expo": "49.0.0-beta.0",
     "expo-constants": "~14.4.2",
     "expo-font": "~11.4.0",
