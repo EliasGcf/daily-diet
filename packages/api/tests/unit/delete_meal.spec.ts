@@ -33,7 +33,7 @@ test.group('Delete meal', (group) => {
       sut.execute({
         mealId: 'invalid-meal-id',
         userId: user.id,
-      })
+      }),
     )
   })
 
@@ -44,7 +44,7 @@ test.group('Delete meal', (group) => {
       sut.execute({
         mealId: meal.id,
         userId: 'invalid-user-id',
-      })
+      }),
     )
   })
 })

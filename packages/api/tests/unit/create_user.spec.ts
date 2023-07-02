@@ -25,7 +25,9 @@ test.group('Create user', (group) => {
     assert.isTrue(user.$isPersisted)
   })
 
-  test('should not be able to create an user with an existing email', async ({ assert }) => {
+  test('should not be able to create an user with an existing email', async ({
+    assert,
+  }) => {
     const user = await UserFactory.create()
 
     assert.rejects(async () => {

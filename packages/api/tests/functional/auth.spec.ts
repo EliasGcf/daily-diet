@@ -22,7 +22,9 @@ test.group('Auth', (group) => {
     response.assertStatus(200)
   })
 
-  test('should not be able to authenticate with invalid credentials', async ({ client }) => {
+  test('should not be able to authenticate with invalid credentials', async ({
+    client,
+  }) => {
     const user = await UserFactory.make()
 
     const response = await client.post('/login').fields({

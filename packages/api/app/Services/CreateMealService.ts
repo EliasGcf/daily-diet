@@ -11,7 +11,12 @@ interface CreateMealServiceRequest {
 }
 
 export default class CreateMealService {
-  public async execute({ userId, name, description, isOnDiet }: CreateMealServiceRequest) {
+  public async execute({
+    userId,
+    name,
+    description,
+    isOnDiet,
+  }: CreateMealServiceRequest) {
     const user = await User.find(userId)
 
     if (!user) {

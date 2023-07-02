@@ -25,19 +25,27 @@ test.group('Get user meal', (group) => {
     assert.equal(mealFound.id, meal.id)
   })
 
-  test('should not be able to get an meal if the user does not exists', async ({ assert }) => {
+  test('should not be able to get an meal if the user does not exists', async ({
+    assert,
+  }) => {
     const meal = await MealFactory.create()
 
-    assert.rejects(async () => sut.execute({ mealId: meal.id, userId: 'non-existing-id' }))
+    assert.rejects(async () =>
+      sut.execute({ mealId: meal.id, userId: 'non-existing-id' }),
+    )
   })
 
   test('should not be able to get an meal if it does not exist', async ({ assert }) => {
     const user = await UserFactory.create()
 
-    assert.rejects(async () => sut.execute({ mealId: 'non-existing-id', userId: user.id }))
+    assert.rejects(async () =>
+      sut.execute({ mealId: 'non-existing-id', userId: user.id }),
+    )
   })
 
-  test('should not be able to get an meal if does not belong to the user', async ({ assert }) => {
+  test('should not be able to get an meal if does not belong to the user', async ({
+    assert,
+  }) => {
     const user = await UserFactory.create()
     const meal = await MealFactory.with('user').create()
 

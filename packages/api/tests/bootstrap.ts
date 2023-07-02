@@ -24,7 +24,11 @@ Factory.stubId(() => randomUUID())
 | Feel free to remove existing plugins or add more.
 |
 */
-export const plugins: Required<Config>['plugins'] = [assert(), runFailedTests(), apiClient()]
+export const plugins: Required<Config>['plugins'] = [
+  assert(),
+  runFailedTests(),
+  apiClient(),
+]
 
 /*
 |--------------------------------------------------------------------------

@@ -52,7 +52,7 @@ test.group('Update meal', (group) => {
         createdAt: fakeMeal.createdAt.toJSDate(),
         description: fakeMeal.description,
         isOnDiet: fakeMeal.isOnDiet,
-      })
+      }),
     )
   })
 
@@ -71,7 +71,7 @@ test.group('Update meal', (group) => {
         createdAt: fakeMeal.createdAt.toJSDate(),
         description: fakeMeal.description,
         isOnDiet: fakeMeal.isOnDiet,
-      })
+      }),
     )
   })
 })

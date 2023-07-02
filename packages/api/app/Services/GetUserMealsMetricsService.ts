@@ -35,7 +35,7 @@ export default class GetUserMealsMetricsService {
 
         return acc
       },
-      { bestOnDietSequence: 0, currentSequence: 0 }
+      { bestOnDietSequence: 0, currentSequence: 0 },
     )
 
     return {

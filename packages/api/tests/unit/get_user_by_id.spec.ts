@@ -21,7 +21,9 @@ test.group('Get user by id', (group) => {
     assert.equal(userFound.id, user.id)
   })
 
-  test('should not be able to get an user by id if it does not exist', async ({ assert }) => {
+  test('should not be able to get an user by id if it does not exist', async ({
+    assert,
+  }) => {
     assert.rejects(async () => {
       await sut.execute('non-existing-id')
     })

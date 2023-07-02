@@ -10,7 +10,7 @@ import CreateUserValidator from 'App/Validators/Users/CreateUserValidator'
 export default class UsersController {
   constructor(
     private createUserService: CreateUserService,
-    private getUserByIdService: GetUserByIdService
+    private getUserByIdService: GetUserByIdService,
   ) {}
 
   public async store({ request, response }: HttpContextContract) {

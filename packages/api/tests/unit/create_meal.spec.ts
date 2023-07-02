@@ -23,7 +23,9 @@ test.group('Create meal', (group) => {
     assert.isTrue(meal.$isPersisted)
   })
 
-  test('should not be able to create a meal with an invalid user id', async ({ assert }) => {
+  test('should not be able to create a meal with an invalid user id', async ({
+    assert,
+  }) => {
     const fakeMeal = await MealFactory.make()
 
     assert.rejects(() => sut.execute(fakeMeal))

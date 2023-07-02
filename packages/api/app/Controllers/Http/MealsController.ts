@@ -17,7 +17,7 @@ export default class MealsController {
     private deleteMealService: DeleteMealService,
     private updateMealService: UpdateMealService,
     private getUserMealService: GetUserMealService,
-    private getUserMealsMetricsService: GetUserMealsMetricsService
+    private getUserMealsMetricsService: GetUserMealsMetricsService,
   ) {}
 
   public async store({ request, response, auth }: HttpContextContract) {
@@ -48,7 +48,7 @@ export default class MealsController {
     const { id } = request.params()
 
     const { name, description, isOnDiet, createdAt } = await request.validate(
-      UpdateMealValidator
+      UpdateMealValidator,
     )
 
     const meal = await this.updateMealService.execute({
