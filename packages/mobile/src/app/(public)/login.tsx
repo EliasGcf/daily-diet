@@ -1,13 +1,14 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Controller, useForm } from 'react-hook-form';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { StyleSheet, View } from 'react-native';
 import { z } from 'zod';
 
 import LogoSvg from '@assets/logo.svg';
 
 import { Button } from '@components/Button';
+import { Form } from '@components/Form';
 import { KeyboardController } from '@components/KeyboardController';
-import { TextInput } from '@components/TextInput';
 
 import { useAuth } from '@hooks/useAuth';
 
@@ -24,17 +25,20 @@ const formSchema = z.object({
 type FormData = z.infer<typeof formSchema>;
 
 export default function LoginPage() {
+  const [isLoading, setIsLoading] = useState(false);
   const { signIn } = useAuth();
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
   });
 
-  function handleSubmit(formData: FormData) {
-    signIn({
+  async function handleSubmit(formData: FormData) {
+    setIsLoading(true);
+    await signIn({
       email: formData.email,
       password: formData.password,
     });
+    setIsLoading(false);
   }
 
   return (
@@ -42,45 +46,33 @@ export default function LoginPage() {
       <View style={styles.container}>
         <LogoSvg width={300} height={60} />
         <View style={styles.content}>
-          <Controller
-            control={form.control}
+          <Form.TextInput
+            label="E-mail"
             name="email"
-            render={({ field }) => (
-              <TextInput
-                error={form.formState.errors.email?.message}
-                label="E-mail"
-                autoCapitalize="none"
-                autoCorrect={false}
-                autoComplete="email"
-                placeholder="example@email.com"
-                onChange={field.onChange}
-                onBlur={field.onBlur}
-                value={field.value}
-                returnKeyType="default"
-                onSubmitEditing={() => form.handleSubmit(handleSubmit)()}
-              />
-            )}
-          />
-          <Controller
             control={form.control}
-            name="password"
-            render={({ field }) => (
-              <TextInput
-                error={form.formState.errors.password?.message}
-                placeholder="••••••••"
-                label="Senha"
-                autoCapitalize="none"
-                autoComplete="off"
-                autoCorrect={false}
-                secureTextEntry
-                onChange={field.onChange}
-                onBlur={field.onBlur}
-                value={field.value}
-                onSubmitEditing={() => form.handleSubmit(handleSubmit)()}
-              />
-            )}
+            autoCapitalize="none"
+            autoCorrect={false}
+            autoComplete="email"
+            placeholder="example@email.com"
+            returnKeyType="default"
+            onSubmitEditing={() => form.handleSubmit(handleSubmit)()}
           />
-          <Button title="Entrar" onPress={() => form.handleSubmit(handleSubmit)()} />
+          <Form.TextInput
+            name="password"
+            control={form.control}
+            placeholder="••••••••"
+            label="Senha"
+            autoCapitalize="none"
+            autoComplete="off"
+            autoCorrect={false}
+            secureTextEntry
+            onSubmitEditing={() => form.handleSubmit(handleSubmit)()}
+          />
+          <Button
+            isLoading={isLoading}
+            title="Entrar"
+            onPress={() => form.handleSubmit(handleSubmit)()}
+          />
         </View>
       </View>
     </KeyboardController>

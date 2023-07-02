@@ -4,7 +4,7 @@ import LogoSvg from '@assets/logo.svg';
 
 import { Button } from '@components/Button';
 import { KeyboardController } from '@components/KeyboardController';
-import { TextInput } from '@components/TextInput';
+import { TextInput } from '@components/ui/TextInput';
 
 export default function SignUpPage() {
   return (

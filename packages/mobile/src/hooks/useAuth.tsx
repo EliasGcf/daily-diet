@@ -41,8 +41,10 @@ export function AuthProvider({
   useEffect(() => {
     // Simulate loading user data from API
     async function loadUser() {
-      // eslint-disable-next-line no-promise-executor-return
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      if (!user) {
+        // eslint-disable-next-line no-promise-executor-return
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+      }
       router.replace('/home');
     }
 
@@ -53,11 +55,13 @@ export function AuthProvider({
     } else if (token && inPublicGroup && canRedirect) {
       loadUser();
     }
-  }, [token, segments, canRedirect]);
+  }, [token, segments, canRedirect, user]);
 
   const value = useMemo(() => {
     return {
       signIn: async () => {
+        // eslint-disable-next-line no-promise-executor-return
+        await new Promise((resolve) => setTimeout(resolve, 1000));
         setUser({} as User);
         setToken('token');
       },

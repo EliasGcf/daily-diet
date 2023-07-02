@@ -8,8 +8,8 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Button } from '@components/Button';
 import { DatePicker } from '@components/DatePicker';
 import { Select } from '@components/Select';
-import { TextInput } from '@components/TextInput';
 import { Text } from '@components/ui/Text';
+import { TextInput } from '@components/ui/TextInput';
 
 import { MEALS } from '@shared/meals';
 import { theme } from '@shared/theme';

@@ -13,7 +13,7 @@ import { Text } from '@components/ui/Text';
 
 import { theme } from '@shared/theme';
 
-type TextInputProps = Omit<RNTextInputProps, 'onChange'> & {
+export type TextInputProps = Omit<RNTextInputProps, 'onChange'> & {
   label: string;
   isFocused?: boolean;
   error?: string;

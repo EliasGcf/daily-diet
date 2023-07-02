@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Pressable, View } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
-import { TextInput } from '@components/TextInput';
+import { TextInput } from '@components/ui/TextInput';
 
 import { Platform } from '@shared/platform';
 import { theme } from '@shared/theme';
