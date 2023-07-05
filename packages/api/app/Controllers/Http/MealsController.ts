@@ -3,6 +3,7 @@ import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 import CreateMealService from 'App/Services/CreateMealService'
 import DeleteMealService from 'App/Services/DeleteMealService'
+import FetchUserMealsService from 'App/Services/FetchUserMealsService'
 import GetUserMealService from 'App/Services/GetUserMealService'
 import GetUserMealsMetricsService from 'App/Services/GetUserMealsMetricsService'
 import UpdateMealService from 'App/Services/UpdateMealService'
@@ -18,6 +19,7 @@ export default class MealsController {
     private updateMealService: UpdateMealService,
     private getUserMealService: GetUserMealService,
     private getUserMealsMetricsService: GetUserMealsMetricsService,
+    private fetchUserMealsService: FetchUserMealsService,
   ) {}
 
   public async store({ request, response, auth }: HttpContextContract) {
@@ -34,6 +36,16 @@ export default class MealsController {
     })
 
     return response.status(201).send(meal)
+  }
+
+  public async index({ auth }: HttpContextContract) {
+    const meals = await this.fetchUserMealsService.execute({
+      userId: auth.user?.id!,
+      page: 1,
+      perPage: 30,
+    })
+
+    return meals
   }
 
   public async show({ request, auth }: HttpContextContract) {

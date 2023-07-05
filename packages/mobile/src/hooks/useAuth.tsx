@@ -40,6 +40,8 @@ export function AuthProvider({
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useAsyncStorage<string | null>('@DailyDiet:token', null);
 
+  api.defaults.headers.authorization = `Bearer ${token}`;
+
   useEffect(() => {
     async function loadUser() {
       if (!user) {
@@ -63,8 +65,6 @@ export function AuthProvider({
       setUser(null);
       router.replace('/login');
     } else if (token && !inPrivateGroup && canRedirect) {
-      api.defaults.headers.authorization = `Bearer ${token}`;
-
       loadUser();
     }
   }, [token, segments, canRedirect, user, pathname]);

@@ -1,3 +1,4 @@
+import type { Meal } from '@lib/api';
 import { StyleSheet, View } from 'react-native';
 
 import { Dot } from '@components/Dot';
@@ -7,15 +8,11 @@ import { theme } from '@shared/theme';
 import { formatTime } from '@shared/utils/format-time';
 
 type MealProps = {
-  meal: {
-    title: string;
-    date: Date;
-    isOnDiet: boolean;
-  };
+  meal: Meal;
 };
 
 export function Meal({ meal }: MealProps) {
-  const formattedHour = formatTime(meal.date);
+  const formattedHour = formatTime(new Date(meal.date));
 
   return (
     <View style={styles.container}>
@@ -26,7 +23,7 @@ export function Meal({ meal }: MealProps) {
       <View style={styles.verticalLine} />
 
       <Text size="md" color="gray.200" numberOfLines={1} style={styles.title}>
-        {meal.title}
+        {meal.name}
       </Text>
 
       <Dot

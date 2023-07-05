@@ -2,6 +2,8 @@ import {
   NunitoSans_400Regular,
   NunitoSans_700Bold,
 } from '@expo-google-fonts/nunito-sans';
+import { queryClient } from '@lib/react-query';
+import { QueryClientProvider } from '@tanstack/react-query';
 import { useFonts } from 'expo-font';
 import { SplashScreen, Stack } from 'expo-router';
 import { useEffect, useState } from 'react';
@@ -31,14 +33,16 @@ export default function Layout() {
 
   return (
     <AuthProvider canRedirect={canRedirect}>
-      <View style={{ flex: 1 }} onLayout={() => setCanRedirect(true)}>
-        <Stack
-          screenOptions={{
-            headerShown: false,
-            contentStyle: { backgroundColor: theme.colors.white },
-          }}
-        />
-      </View>
+      <QueryClientProvider client={queryClient}>
+        <View style={{ flex: 1 }} onLayout={() => setCanRedirect(true)}>
+          <Stack
+            screenOptions={{
+              headerShown: false,
+              contentStyle: { backgroundColor: theme.colors.white },
+            }}
+          />
+        </View>
+      </QueryClientProvider>
     </AuthProvider>
   );
 }

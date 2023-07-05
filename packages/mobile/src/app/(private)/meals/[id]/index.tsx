@@ -1,7 +1,7 @@
 import { Link, router, useLocalSearchParams } from 'expo-router';
 import { ArrowLeft, Pencil, Trash } from 'phosphor-react-native';
 import { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -11,7 +11,8 @@ import { Dialog } from '@components/Dialog';
 import { Tag } from '@components/Tag';
 import { Text } from '@components/ui/Text';
 
-import { MEALS } from '@shared/meals';
+import { useMeal } from '@hooks/useMeals';
+
 import { theme } from '@shared/theme';
 
 type Stage = 'dialog-open' | 'dialog-closed' | 'deleting';
@@ -21,11 +22,7 @@ export default function ViewMeal() {
   const params = useLocalSearchParams<'/(private)/meals/[id]/'>();
   const [stage, setStage] = useState<Stage>('dialog-closed');
 
-  const meal = MEALS.find((fMeal) => fMeal.id === params.id);
-
-  if (!meal) {
-    return router.replace('/404');
-  }
+  const query = useMeal(params.id);
 
   function handleDelete() {
     setStage('deleting');
@@ -35,12 +32,20 @@ export default function ViewMeal() {
     }, 1000);
   }
 
+  if (!query.data || query.isLoading) {
+    return (
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <ActivityIndicator color={theme.colors.green.dark} />
+      </View>
+    );
+  }
+
   return (
     <View
       style={[
         styles.container,
         { paddingTop: safeAreaInsets.top + 12 },
-        meal.isOnDiet
+        query.data.isOnDiet
           ? { backgroundColor: theme.colors.green.light }
           : { backgroundColor: theme.colors.red.light },
       ]}
@@ -58,10 +63,10 @@ export default function ViewMeal() {
       <View style={[styles.content, { paddingBottom: safeAreaInsets.bottom + 12 }]}>
         <View style={{ gap: 8 }}>
           <Text color="gray.100" weight="bold" size="xl">
-            {meal.title}
+            {query.data.name}
           </Text>
           <Text color="gray.200" size="md">
-            {meal.description}
+            {query.data.description}
           </Text>
         </View>
 
@@ -74,14 +79,14 @@ export default function ViewMeal() {
           </Text>
         </View>
 
-        {meal.isOnDiet ? (
+        {query.data.isOnDiet ? (
           <Tag title="dentro da dieta" color={theme.colors.green.dark} />
         ) : (
           <Tag title="fora da deita" color={theme.colors.red.dark} />
         )}
 
         <View style={[styles.footer]}>
-          <Link asChild href={`/meals/${meal.id}/edit`}>
+          <Link asChild href={`/meals/${params.id}/edit`}>
             <Button icon={Pencil} title="Editar refeição" />
           </Link>
 

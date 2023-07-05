@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 import { Link } from 'expo-router';
 import { ArrowUpRight, Plus } from 'phosphor-react-native';
 import React, { useState } from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -18,13 +18,16 @@ import { Meal } from '@components/Meal';
 import { Text } from '@components/ui/Text';
 
 import { useAuth, useUser } from '@hooks/useAuth';
+import { useMeals } from '@hooks/useMeals';
 
 import { MEALS } from '@shared/meals';
+import { theme } from '@shared/theme';
 
 const IS_ON_DIET = true;
 
 export default function HomePage() {
   const [dialogOpen, setDialogOpen] = useState<'signout' | null>(null);
+  const meals = useMeals();
 
   const { signOut } = useAuth();
   const user = useUser();
@@ -81,14 +84,19 @@ export default function HomePage() {
         </Link>
       </View>
 
+      {meals.isLoading && (
+        <ActivityIndicator style={{ marginTop: 40 }} color={theme.colors.green.dark} />
+      )}
+
       <FlashList
-        data={MEALS}
+        data={meals.data}
         estimatedItemSize={65700}
         // eslint-disable-next-line react/no-unstable-nested-components
         ItemSeparatorComponent={() => <View style={{ height: 8 }} />}
         renderItem={({ item, index }) => {
           const isFirstOfTheDay =
-            index === 0 || item.date.getDate() !== MEALS[index - 1].date.getDate();
+            index === 0 ||
+            new Date(item.date).getDate() !== MEALS[index - 1].date.getDate();
 
           const Item = (
             <Link asChild href={`/meals/${item.id}/`}>
