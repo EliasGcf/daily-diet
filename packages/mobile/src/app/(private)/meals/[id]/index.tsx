@@ -17,7 +17,7 @@ import { theme } from '@shared/theme';
 
 type Stage = 'dialog-open' | 'dialog-closed' | 'deleting';
 
-export default function ViewMeal() {
+export default function MealDetail() {
   const safeAreaInsets = useSafeAreaInsets();
   const params = useLocalSearchParams<'/(private)/meals/[id]/'>();
   const [stage, setStage] = useState<Stage>('dialog-closed');
