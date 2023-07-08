@@ -28,12 +28,16 @@ export const queries = createQueryKeyStore({
       queryFn: async () => {
         const response = await api.get<Metrics>('/meals/metrics');
 
-        const percentage = (response.data.onDiet / response.data.total) * 100;
+        const percentage =
+          response.data.total === 0
+            ? 0
+            : (response.data.onDiet / response.data.total) * 100;
+
         const isOnDiet = percentage >= 80;
 
         return {
           ...response.data,
-          percentage: percentage.toFixed(2),
+          percentage: percentage === 0 ? 0 : percentage.toFixed(2).replace('.', ','),
           isOnDiet,
         };
       },

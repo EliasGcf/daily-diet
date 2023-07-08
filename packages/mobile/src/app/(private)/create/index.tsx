@@ -1,7 +1,4 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { api } from '@lib/api';
-import { queries } from '@lib/react-query';
-import { useQueryClient } from '@tanstack/react-query';
 import { router } from 'expo-router';
 import { ArrowLeft } from 'phosphor-react-native';
 import { useState } from 'react';
@@ -16,6 +13,8 @@ import { Form } from '@components/Form';
 import { Select } from '@components/Select';
 import { Text } from '@components/ui/Text';
 
+import { useCreateMeal } from '@hooks/useMeals';
+
 import { theme } from '@shared/theme';
 
 const formSchema = z.object({
@@ -28,9 +27,9 @@ const formSchema = z.object({
 type FormData = z.infer<typeof formSchema>;
 
 export default function CreatePage() {
-  const [isOnDiet, setIsOnDiet] = useState<boolean | undefined>(false);
+  const [isOnDiet, setIsOnDiet] = useState<boolean>(false);
   const safeAreaInsets = useSafeAreaInsets();
-  const queryClient = useQueryClient();
+  const createMealMutation = useCreateMeal();
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -46,17 +45,12 @@ export default function CreatePage() {
     formData.date.setSeconds(0);
     formData.date.setMilliseconds(0);
 
-    await api.post('/meals', {
+    await createMealMutation.mutateAsync({
       name: formData.name,
       description: formData.description,
       date: formData.date,
       isOnDiet,
     });
-
-    queryClient.invalidateQueries([
-      queries.meals.list.queryKey,
-      queries.meals.metrics.queryKey,
-    ]);
 
     router.push({
       pathname: '/create/feedback',
