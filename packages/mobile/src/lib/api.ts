@@ -23,3 +23,10 @@ export type Meal = {
   createdAt: string;
   updatedAt: string;
 };
+
+export type Metrics = {
+  bestOnDietSequence: number;
+  offDiet: number;
+  onDiet: number;
+  total: number;
+};

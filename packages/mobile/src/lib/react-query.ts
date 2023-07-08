@@ -1,13 +1,14 @@
-import { Meal, api } from '@lib/api';
 import { createQueryKeyStore } from '@lukemorales/query-key-factory';
 import { QueryClient } from '@tanstack/react-query';
+
+import { Meal, Metrics, api } from '@lib/api';
 
 export const queryClient = new QueryClient();
 
 export const queries = createQueryKeyStore({
   meals: {
     list: {
-      queryKey: ['meals'],
+      queryKey: null,
       queryFn: async () => {
         const response = await api.get<{ data: Meal[] }>('/meals');
 
@@ -22,5 +23,20 @@ export const queries = createQueryKeyStore({
         return response.data;
       },
     }),
+    metrics: {
+      queryKey: null,
+      queryFn: async () => {
+        const response = await api.get<Metrics>('/meals/metrics');
+
+        const percentage = (response.data.onDiet / response.data.total) * 100;
+        const isOnDiet = percentage >= 80;
+
+        return {
+          ...response.data,
+          percentage: percentage.toFixed(2),
+          isOnDiet,
+        };
+      },
+    },
   },
 });

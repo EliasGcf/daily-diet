@@ -19,14 +19,14 @@ import { Text } from '@components/ui/Text';
 
 import { useAuth, useUser } from '@hooks/useAuth';
 import { useMeals } from '@hooks/useMeals';
+import { useMetrics } from '@hooks/useMetrics';
 
 import { theme } from '@shared/theme';
 
-const IS_ON_DIET = true;
-
 export default function HomePage() {
   const [dialogOpen, setDialogOpen] = useState<'signout' | null>(null);
-  const meals = useMeals();
+  const mealsQuery = useMeals();
+  const metricsQuery = useMetrics();
 
   const { signOut } = useAuth();
   const user = useUser();
@@ -62,19 +62,29 @@ export default function HomePage() {
         </Dialog.Root>
       </View>
 
-      <Link href="/statistics" asChild>
-        <RectButton activeOpacity={0}>
-          <Box brand={IS_ON_DIET ? 'green' : 'red'} icon={ArrowUpRight}>
-            <Text weight="bold" size="3xl" color="gray.100">
-              90,86%
-            </Text>
+      {metricsQuery.data ? (
+        <Link href="/statistics" asChild>
+          <RectButton activeOpacity={0}>
+            <Box
+              brand={metricsQuery.data?.isOnDiet ? 'green' : 'red'}
+              icon={ArrowUpRight}
+            >
+              <Text weight="bold" size="3xl" color="gray.100">
+                {metricsQuery.data?.percentage}%
+              </Text>
 
-            <Text size="sm" color="gray.200">
-              das refeições dentro da dieta
-            </Text>
-          </Box>
-        </RectButton>
-      </Link>
+              <Text size="sm" color="gray.200">
+                das refeições dentro da dieta
+              </Text>
+            </Box>
+          </RectButton>
+        </Link>
+      ) : (
+        <ActivityIndicator
+          style={{ marginVertical: 20 }}
+          color={theme.colors.green.dark}
+        />
+      )}
 
       <View style={styles.listHeader}>
         <Text color="gray.100">Refeições</Text>
@@ -83,12 +93,12 @@ export default function HomePage() {
         </Link>
       </View>
 
-      {(meals.isLoading || meals.isFetching) && (
+      {(mealsQuery.isLoading || mealsQuery.isFetching) && (
         <ActivityIndicator style={{ marginTop: 40 }} color={theme.colors.green.dark} />
       )}
 
       <FlashList
-        data={meals.data}
+        data={mealsQuery.data}
         estimatedItemSize={65700}
         // eslint-disable-next-line react/no-unstable-nested-components
         ItemSeparatorComponent={() => <View style={{ height: 8 }} />}
@@ -98,7 +108,7 @@ export default function HomePage() {
           const isFirstOfTheDay =
             index === 0 ||
             new Date(item.date).getDate() !==
-              new Date(meals.data![index - 1].date).getDate();
+              new Date(mealsQuery.data![index - 1].date).getDate();
 
           const Item = (
             <Link asChild href={`/meals/${item.id}/`}>

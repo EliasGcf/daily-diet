@@ -54,6 +54,7 @@
           "/^@assets/",
           "/^@components/",
           "/^@hooks/",
+          "/^@lib/",
           "/^@shared/",
           ["parent", "sibling"],
           "index"

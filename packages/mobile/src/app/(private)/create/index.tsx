@@ -53,7 +53,10 @@ export default function CreatePage() {
       isOnDiet,
     });
 
-    queryClient.invalidateQueries([queries.meals.list.queryKey]);
+    queryClient.invalidateQueries([
+      queries.meals.list.queryKey,
+      queries.meals.metrics.queryKey,
+    ]);
 
     router.push({
       pathname: '/create/feedback',

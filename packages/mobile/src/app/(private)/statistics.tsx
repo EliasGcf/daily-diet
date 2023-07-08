@@ -1,25 +1,34 @@
 import { router } from 'expo-router';
 import { ArrowLeft } from 'phosphor-react-native';
-import { StyleSheet, View } from 'react-native';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Box } from '@components/Box';
 import { Text } from '@components/ui/Text';
 
-import { theme } from '@shared/theme';
+import { useMetrics } from '@hooks/useMetrics';
 
-const IS_ON_DIET = true;
+import { theme } from '@shared/theme';
 
 export default function StatisticsPage() {
   const { top } = useSafeAreaInsets();
+  const query = useMetrics();
+
+  if (!query.data || query.isLoading) {
+    return (
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <ActivityIndicator color={theme.colors.green.dark} />
+      </View>
+    );
+  }
 
   return (
     <View
       style={[
         styles.container,
         { paddingTop: top + 24 },
-        IS_ON_DIET
+        query.data.isOnDiet
           ? { backgroundColor: theme.colors.green.light }
           : { backgroundColor: theme.colors.red.light },
       ]}
@@ -28,12 +37,12 @@ export default function StatisticsPage() {
         <RectButton style={styles.goBackButton} onPress={router.back}>
           <ArrowLeft
             size={24}
-            color={IS_ON_DIET ? theme.colors.green.dark : theme.colors.red.dark}
+            color={query.data.isOnDiet ? theme.colors.green.dark : theme.colors.red.dark}
           />
         </RectButton>
 
         <Text weight="bold" size="3xl" color="gray.100">
-          90,86%
+          {query.data.percentage}%
         </Text>
 
         <Text size="sm" color="gray.200">
@@ -49,7 +58,7 @@ export default function StatisticsPage() {
         <View style={styles.cards}>
           <Box>
             <Text weight="bold" size="2xl" color="gray.100">
-              22
+              {query.data.bestOnDietSequence}
             </Text>
 
             <Text size="sm" color="gray.200">
@@ -59,7 +68,7 @@ export default function StatisticsPage() {
 
           <Box>
             <Text weight="bold" size="2xl" color="gray.100">
-              109
+              {query.data.total}
             </Text>
 
             <Text size="sm" color="gray.200">
@@ -70,7 +79,7 @@ export default function StatisticsPage() {
           <View style={{ flexDirection: 'row', gap: 12 }}>
             <Box brand="green" style={{ flex: 1 }}>
               <Text weight="bold" size="2xl" color="gray.100">
-                99
+                {query.data.onDiet}
               </Text>
 
               <Text size="sm" color="gray.200" style={{ textAlign: 'center' }}>
@@ -80,7 +89,7 @@ export default function StatisticsPage() {
 
             <Box brand="red" style={{ flex: 1 }}>
               <Text weight="bold" size="2xl" color="gray.100">
-                10
+                {query.data.offDiet}
               </Text>
 
               <Text size="sm" color="gray.200" style={{ textAlign: 'center' }}>
