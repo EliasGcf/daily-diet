@@ -20,7 +20,6 @@ import { Text } from '@components/ui/Text';
 import { useAuth, useUser } from '@hooks/useAuth';
 import { useMeals } from '@hooks/useMeals';
 
-import { MEALS } from '@shared/meals';
 import { theme } from '@shared/theme';
 
 const IS_ON_DIET = true;
@@ -31,7 +30,7 @@ export default function HomePage() {
 
   const { signOut } = useAuth();
   const user = useUser();
-  const { top } = useSafeAreaInsets();
+  const { top, bottom } = useSafeAreaInsets();
 
   const avatarURL =
     user.avatar || `https://ui-avatars.com/api/?background=EFF0F0&name=${user.name}`;
@@ -84,7 +83,7 @@ export default function HomePage() {
         </Link>
       </View>
 
-      {meals.isLoading && (
+      {(meals.isLoading || meals.isFetching) && (
         <ActivityIndicator style={{ marginTop: 40 }} color={theme.colors.green.dark} />
       )}
 
@@ -93,10 +92,13 @@ export default function HomePage() {
         estimatedItemSize={65700}
         // eslint-disable-next-line react/no-unstable-nested-components
         ItemSeparatorComponent={() => <View style={{ height: 8 }} />}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: bottom }}
         renderItem={({ item, index }) => {
           const isFirstOfTheDay =
             index === 0 ||
-            new Date(item.date).getDate() !== MEALS[index - 1].date.getDate();
+            new Date(item.date).getDate() !==
+              new Date(meals.data![index - 1].date).getDate();
 
           const Item = (
             <Link asChild href={`/meals/${item.id}/`}>

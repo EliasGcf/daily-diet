@@ -1,43 +1,59 @@
+import { zodResolver } from '@hookform/resolvers/zod';
+import { api } from '@lib/api';
+import { queries } from '@lib/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { router } from 'expo-router';
 import { ArrowLeft } from 'phosphor-react-native';
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { StyleSheet, View } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { z } from 'zod';
 
 import { Button } from '@components/Button';
-import { DatePicker } from '@components/DatePicker';
+import { Form } from '@components/Form';
 import { Select } from '@components/Select';
 import { Text } from '@components/ui/Text';
-import { TextInput } from '@components/ui/TextInput';
 
 import { theme } from '@shared/theme';
 
+const formSchema = z.object({
+  name: z.string({ required_error: 'Nome é obrigatório' }),
+  description: z.string({ required_error: 'Descrição é obrigatória' }),
+  date: z.date(),
+  time: z.date(),
+});
+
+type FormData = z.infer<typeof formSchema>;
+
 export default function CreatePage() {
-  const [isOnDiet, setIsOnDiet] = useState<boolean | undefined>(undefined);
-  const [selectedDate, setSelectedDate] = useState(new Date());
-
+  const [isOnDiet, setIsOnDiet] = useState<boolean | undefined>(false);
   const safeAreaInsets = useSafeAreaInsets();
+  const queryClient = useQueryClient();
 
-  function handleDateChange(type: 'date' | 'time', date: Date) {
-    const newDate = new Date(selectedDate);
+  const form = useForm<FormData>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      date: new Date(),
+      time: new Date(),
+    },
+  });
 
-    if (type === 'date') {
-      newDate.setFullYear(date.getFullYear());
-      newDate.setMonth(date.getMonth());
-      newDate.setDate(date.getDate());
+  async function handleSubmit(formData: FormData) {
+    formData.date.setHours(formData.time.getHours());
+    formData.date.setMinutes(formData.time.getMinutes());
+    formData.date.setSeconds(0);
+    formData.date.setMilliseconds(0);
 
-      setSelectedDate(newDate);
-    } else {
-      newDate.setHours(date.getHours());
-      newDate.setMinutes(date.getMinutes());
+    await api.post('/meals', {
+      name: formData.name,
+      description: formData.description,
+      date: formData.date,
+      isOnDiet,
+    });
 
-      setSelectedDate(newDate);
-    }
-  }
-
-  function handleSubmit() {
-    if (isOnDiet === undefined) return;
+    queryClient.invalidateQueries([queries.meals.list.queryKey]);
 
     router.push({
       pathname: '/create/feedback',
@@ -58,25 +74,30 @@ export default function CreatePage() {
       </View>
 
       <View style={[styles.content, { paddingBottom: safeAreaInsets.bottom + 12 }]}>
-        <TextInput label="Nome" />
-        <TextInput label="Descrição" multiline />
+        <Form.TextInput label="Nome" name="name" control={form.control} />
+        <Form.TextInput
+          label="Descrição"
+          name="description"
+          multiline
+          control={form.control}
+        />
 
         <View style={styles.formTime}>
           <View style={{ flex: 1 }}>
-            <DatePicker
+            <Form.DatePicker
+              name="date"
+              control={form.control}
               mode="date"
               label="Data"
-              value={selectedDate}
-              onChange={(date) => handleDateChange('date', date)}
             />
           </View>
 
           <View style={{ flex: 1 }}>
-            <DatePicker
+            <Form.DatePicker
+              name="time"
+              control={form.control}
               mode="time"
               label="Hora"
-              value={selectedDate}
-              onChange={(date) => handleDateChange('time', date)}
             />
           </View>
         </View>
@@ -101,7 +122,11 @@ export default function CreatePage() {
         </View>
 
         <View style={[styles.footer]}>
-          <Button onPress={handleSubmit} title="Cadastrar refeição" />
+          <Button
+            onPress={() => form.handleSubmit(handleSubmit)()}
+            title="Cadastrar refeição"
+            isLoading={form.formState.isSubmitting}
+          />
         </View>
       </View>
     </View>

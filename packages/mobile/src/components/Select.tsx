@@ -7,7 +7,7 @@ import { Text } from '@components/ui/Text';
 
 import { theme } from '@shared/theme';
 
-type SelectProps = Omit<RectButtonProps, 'style'> & {
+export type SelectProps = Omit<RectButtonProps, 'style'> & {
   value: boolean;
   selected?: boolean;
 };

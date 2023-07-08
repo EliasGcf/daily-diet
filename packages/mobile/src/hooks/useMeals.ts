@@ -5,7 +5,7 @@ import { useRefreshOnFocus } from '@hooks/use-refresh-on-focus';
 
 export function useMeals() {
   const query = useQuery(queries.meals.list);
-  useRefreshOnFocus(query.refetch);
+  // useRefreshOnFocus(query.refetch);
 
   return query;
 }

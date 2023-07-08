@@ -6,20 +6,24 @@ import {
   PathValue,
 } from 'react-hook-form';
 
-import { TextInput, TextInputProps } from '@components/ui/TextInput';
+import { DatePicker, DatePickerProps } from '@components/DatePicker';
 
 import { WithRequired } from '@shared/with-required';
 
-type Props<T extends FieldValues> = Omit<ControllerProps<T>, 'render'> & TextInputProps;
+type Props<T extends FieldValues> = WithRequired<
+  Omit<ControllerProps<T>, 'render'>,
+  'control'
+> &
+  DatePickerProps;
 
-export function FormTextInput<T extends FieldValues>({
+export function FormDatePicker<T extends FieldValues>({
   name,
   control,
   defaultValue,
   rules,
   shouldUnregister,
   ...rest
-}: WithRequired<Props<T>, 'control'>) {
+}: Props<T>) {
   return (
     <Controller
       name={name}
@@ -27,13 +31,11 @@ export function FormTextInput<T extends FieldValues>({
       defaultValue={defaultValue}
       rules={rules}
       shouldUnregister={shouldUnregister}
-      render={({ field, fieldState }) => {
+      render={({ field }) => {
         return (
-          <TextInput
+          <DatePicker
             {...rest}
-            error={fieldState.error?.message}
-            onChange={(text) => field.onChange(text as PathValue<T, Path<T>>)}
-            onBlur={field.onBlur}
+            onChange={(date) => field.onChange(date as PathValue<T, Path<T>>)}
             value={field.value}
           />
         );

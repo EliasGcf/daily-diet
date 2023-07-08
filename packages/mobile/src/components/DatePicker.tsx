@@ -8,10 +8,10 @@ import { TextInput } from '@components/ui/TextInput';
 import { Platform } from '@shared/platform';
 import { theme } from '@shared/theme';
 
-type Props = {
-  value: Date;
+export type DatePickerProps = {
+  value?: Date;
   label: string;
-  onChange: (date: Date) => void;
+  onChange?: (date: Date) => void;
   mode: 'date' | 'time';
 };
 
@@ -34,14 +34,16 @@ const SETTINGS = {
   },
 } as const;
 
-export function DatePicker({ value, label, onChange, mode }: Props) {
+export function DatePicker({ value, label, onChange, mode }: DatePickerProps) {
   const [show, setShow] = useState(false);
 
-  const formattedDate = dayjs(value).format(mode === 'date' ? 'DD/MM/YYYY' : 'HH:mm');
+  const formattedDate = value
+    ? dayjs(value).format(mode === 'date' ? 'DD/MM/YYYY' : 'HH:mm')
+    : '';
 
   function handleConfirm(date: Date) {
     setShow(false);
-    onChange(date);
+    if (onChange) onChange(date);
   }
 
   const platformSettings = SETTINGS[Platform.OS][mode];
