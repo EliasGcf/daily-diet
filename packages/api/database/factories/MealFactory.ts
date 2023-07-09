@@ -10,7 +10,7 @@ export default Factory.define(Meal, ({ faker }) => {
     name: faker.lorem.words(2),
     description: faker.lorem.paragraph(),
     isOnDiet: faker.datatype.boolean(),
-    date: DateTime.fromJSDate(faker.date.recent()),
+    date: DateTime.fromJSDate(new Date()),
   }
 })
   .relation('user', () => UserFactory)

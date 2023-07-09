@@ -7,12 +7,13 @@ const blurHash = `|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWX
 
 type AvatarProps = {
   url: string;
+  size?: number;
 };
 
-export function Avatar({ url }: AvatarProps) {
+export function Avatar({ url, size = 40 }: AvatarProps) {
   return (
     <Image
-      style={styles.image}
+      style={[styles.image, { width: size, height: size }]}
       source={url}
       contentFit="cover"
       placeholder={blurHash}
@@ -23,9 +24,7 @@ export function Avatar({ url }: AvatarProps) {
 
 const styles = StyleSheet.create({
   image: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    borderRadius: 99999,
     borderWidth: 2,
     borderColor: theme.colors.gray[200],
   },

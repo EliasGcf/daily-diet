@@ -71,6 +71,7 @@ export function TextInput({
           {
             ...(error && styles.error),
             ...(isFocused && styles.focused),
+            ...(rest.editable === false && styles.disabled),
           },
         ]}
         onFocus={() => setIsFocused(true)}
@@ -115,5 +116,10 @@ const styles = StyleSheet.create({
 
   error: {
     borderColor: theme.colors.red.dark,
+  },
+
+  disabled: {
+    backgroundColor: theme.colors.gray[600],
+    color: theme.colors.gray[300],
   },
 });

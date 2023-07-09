@@ -19,11 +19,19 @@ type User = {
   avatar?: string;
 };
 
+type UpdateUser = {
+  name: string;
+  newPassword?: string;
+  newPasswordConfirmation?: string;
+  currentPassword?: string;
+};
+
 type AuthContextProps = {
   user?: User | null;
   token?: string | null;
   signIn: (props: { email: string; password: string }) => Promise<void>;
   signOut: () => Promise<void>;
+  updateUser: (props: UpdateUser) => Promise<void>;
 };
 
 const AuthContext = createContext({} as AuthContextProps);
@@ -73,7 +81,7 @@ export function AuthProvider({
       }
       router.replace('/login');
       setUser(null);
-    } else if (token && inPublicGroup && canRedirect) {
+    } else if (token && (inPublicGroup || inSplashScreen) && canRedirect) {
       onAuthenticated();
     }
   }, [token, segments, canRedirect, user, pathname, navigation]);
@@ -97,6 +105,16 @@ export function AuthProvider({
         } finally {
           setToken(null);
         }
+      },
+      updateUser: async (data) => {
+        const response = await api.put('/users', data);
+
+        setUser({
+          id: response.data.id,
+          name: response.data.name,
+          email: response.data.email,
+          avatar: response.data.avatar,
+        });
       },
       user,
       token,

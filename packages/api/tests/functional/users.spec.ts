@@ -29,4 +29,27 @@ test.group('UsersController', (group) => {
 
     assert.notProperty(response.body(), 'password')
   })
+
+  test('should be able to update the authenticated user', async ({ client, assert }) => {
+    const user = await UserFactory.merge({ password: '123456' }).create()
+    const fakeUser = await UserFactory.make()
+
+    const response = await client
+      .put('/users')
+      .json({
+        name: fakeUser.name,
+        currentPassword: '123456',
+        newPassword: '12345678',
+        newPasswordConfirmation: '12345678',
+      })
+      .loginAs(user)
+
+    response.assertStatus(200)
+
+    assert.containsSubset(response.body(), {
+      id: user.id,
+      name: fakeUser.name,
+      email: user.email,
+    })
+  })
 })

@@ -49,10 +49,10 @@ test.group('MealsController', (group) => {
   })
 
   test('should be able to get metrics', async ({ client, assert }) => {
-    const user = await UserFactory.merge({})
-      .with('meals', 2, (meal) => meal.merge({ isOnDiet: true }))
-      .with('meals', 3, (meal) => meal.merge({ isOnDiet: false }))
-      .create()
+    const user = await UserFactory.merge({}).create()
+
+    await MealFactory.merge({ isOnDiet: true, userId: user.id }).createMany(2)
+    await MealFactory.merge({ isOnDiet: false, userId: user.id }).createMany(3)
 
     const response = await client.get('/meals/metrics').loginAs(user)
 
