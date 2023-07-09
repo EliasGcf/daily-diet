@@ -1,5 +1,4 @@
-import { api } from '@lib/api';
-import { router, usePathname, useSegments } from 'expo-router';
+import { router, useNavigation, usePathname, useSegments } from 'expo-router';
 import {
   ReactNode,
   createContext,
@@ -10,6 +9,8 @@ import {
 } from 'react';
 
 import { useAsyncStorage } from '@hooks/useAsyncStorage';
+
+import { api } from '@lib/api';
 
 type User = {
   id: string;
@@ -34,6 +35,7 @@ export function AuthProvider({
   children: ReactNode;
   canRedirect: boolean;
 }) {
+  const navigation = useNavigation();
   const segments = useSegments();
   const pathname = usePathname();
 
@@ -43,7 +45,7 @@ export function AuthProvider({
   api.defaults.headers.authorization = `Bearer ${token}`;
 
   useEffect(() => {
-    async function loadUser() {
+    async function onAuthenticated() {
       if (!user) {
         const response = await api.get('/me');
 
@@ -55,25 +57,38 @@ export function AuthProvider({
         });
       }
 
+      if (navigation.canGoBack()) {
+        navigation.dispatch({ type: 'POP_TO_TOP' });
+      }
       router.replace('/home');
     }
 
     const inPrivateGroup = segments[0] === '(private)';
+    const inPublicGroup = segments[0] === '(public)';
     const inSplashScreen = pathname === '/';
 
     if (!token && (inPrivateGroup || inSplashScreen) && canRedirect) {
-      setUser(null);
+      if (navigation.canGoBack()) {
+        navigation.dispatch({ type: 'POP_TO_TOP' });
+      }
       router.replace('/login');
-    } else if (token && !inPrivateGroup && canRedirect) {
-      loadUser();
+      setUser(null);
+    } else if (token && inPublicGroup && canRedirect) {
+      onAuthenticated();
     }
-  }, [token, segments, canRedirect, user, pathname]);
+  }, [token, segments, canRedirect, user, pathname, navigation]);
 
   const value = useMemo<AuthContextProps>(() => {
     return {
       signIn: async ({ email, password }) => {
         const response = await api.post('/login', { email, password });
 
+        setUser({
+          name: response.data.user.name,
+          email: response.data.user.email,
+          id: response.data.user.id,
+          avatar: response.data.user.avatar,
+        });
         setToken(response.data.token);
       },
       signOut: async () => {
