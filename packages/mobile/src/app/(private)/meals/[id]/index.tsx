@@ -11,7 +11,7 @@ import { Dialog } from '@components/Dialog';
 import { Tag } from '@components/Tag';
 import { Text } from '@components/ui/Text';
 
-import { useMeal } from '@hooks/useMeals';
+import { useDeleteMeal, useMeal } from '@hooks/useMeals';
 
 import { theme } from '@shared/theme';
 
@@ -23,13 +23,14 @@ export default function MealDetail() {
   const [stage, setStage] = useState<Stage>('dialog-closed');
 
   const query = useMeal(params.id);
+  const deleteMealMutation = useDeleteMeal(params.id);
 
-  function handleDelete() {
+  async function handleDelete() {
     setStage('deleting');
 
-    setTimeout(() => {
-      setStage('dialog-closed');
-    }, 1000);
+    await deleteMealMutation.mutateAsync();
+
+    router.replace('meals');
   }
 
   if (!query.data || query.isLoading) {

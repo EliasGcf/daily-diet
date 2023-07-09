@@ -1,59 +1,55 @@
+import { zodResolver } from '@hookform/resolvers/zod';
 import { router, useLocalSearchParams } from 'expo-router';
 import { ArrowLeft } from 'phosphor-react-native';
-import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { StyleSheet, View } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Button } from '@components/Button';
-import { DatePicker } from '@components/DatePicker';
-import { OnDietSelect } from '@components/Select';
+import { MealForm, MealFormData, mealFormSchema } from '@components/MealForm';
 import { Text } from '@components/ui/Text';
-import { TextInput } from '@components/ui/TextInput';
 
-import { MEALS } from '@shared/meals';
+import { useMeal, useUpdateMeal } from '@hooks/useMeals';
+
 import { theme } from '@shared/theme';
 
-type Params = {
-  id: string;
-};
-
 export default function EditPage() {
-  const params = useLocalSearchParams() as Params;
+  const params = useLocalSearchParams<'/(private)/meals/[id]/edit'>();
   const safeAreaInsets = useSafeAreaInsets();
 
-  const meal = MEALS.find((fMeal) => fMeal.id === params.id)!;
+  const query = useMeal(params.id);
+  const updateMealMutation = useUpdateMeal(params.id);
 
-  const [isOnDiet, setIsOnDiet] = useState<boolean>(meal.isOnDiet);
-  const [isLoading, setIsLoading] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(meal.date);
+  const form = useForm<MealFormData>({
+    resolver: zodResolver(mealFormSchema),
+    values: query.data
+      ? {
+          date: new Date(query.data.date),
+          time: new Date(query.data.date),
+          name: query.data.name,
+          description: query.data.description,
+          onDiet: query.data.isOnDiet ? 'on-diet' : 'off-diet',
+        }
+      : undefined,
+  });
 
-  function handleDateChange(type: 'date' | 'time', date: Date) {
-    const newDate = new Date(selectedDate);
+  async function handleSubmit(formData: MealFormData) {
+    formData.date.setHours(formData.time.getHours());
+    formData.date.setMinutes(formData.time.getMinutes());
+    formData.date.setSeconds(0);
+    formData.date.setMilliseconds(0);
 
-    if (type === 'date') {
-      newDate.setFullYear(date.getFullYear());
-      newDate.setMonth(date.getMonth());
-      newDate.setDate(date.getDate());
+    const isOnDiet = formData.onDiet === 'on-diet';
 
-      setSelectedDate(newDate);
-    } else {
-      newDate.setHours(date.getHours());
-      newDate.setMinutes(date.getMinutes());
+    await updateMealMutation.mutateAsync({
+      date: formData.date,
+      name: formData.name,
+      description: formData.description,
+      isOnDiet,
+    });
 
-      setSelectedDate(newDate);
-    }
-  }
-
-  function handleSubmit() {
-    setIsLoading(true);
-
-    // TODO: update meal, show toast, and navigate back
-
-    setTimeout(() => {
-      setIsLoading(false);
-      router.back();
-    }, 1000);
+    router.replace({ pathname: '/home' });
   }
 
   return (
@@ -69,52 +65,12 @@ export default function EditPage() {
       </View>
 
       <View style={[styles.content, { paddingBottom: safeAreaInsets.bottom + 12 }]}>
-        <TextInput label="Nome" defaultValue={meal.title} />
-        <TextInput label="Descrição" multiline defaultValue={meal.description} />
+        <MealForm form={form} />
 
-        <View style={styles.formTime}>
-          <View style={{ flex: 1 }}>
-            <DatePicker
-              mode="date"
-              label="Data"
-              value={selectedDate}
-              onChange={(date) => handleDateChange('date', date)}
-            />
-          </View>
-
-          <View style={{ flex: 1 }}>
-            <DatePicker
-              mode="time"
-              label="Hora"
-              value={selectedDate}
-              onChange={(date) => handleDateChange('time', date)}
-            />
-          </View>
-        </View>
-
-        <View style={{ gap: 8 }}>
-          <Text color="gray.200" weight="bold" size="sm">
-            Está dentro da dieta?
-          </Text>
-
-          <View style={{ flexDirection: 'row', gap: 8 }}>
-            <OnDietSelect
-              isOnDiet
-              onPress={() => setIsOnDiet(true)}
-              selected={isOnDiet === true}
-            />
-            <OnDietSelect
-              onPress={() => setIsOnDiet(false)}
-              isOnDiet={false}
-              selected={isOnDiet === false}
-            />
-          </View>
-        </View>
-
-        <View style={[styles.footer]}>
+        <View style={styles.footer}>
           <Button
-            isLoading={isLoading}
-            onPress={handleSubmit}
+            isLoading={form.formState.isSubmitting}
+            onPress={() => form.handleSubmit(handleSubmit)()}
             title="Salvar alterações"
           />
         </View>

@@ -3,7 +3,7 @@ import { QueryClient } from '@tanstack/react-query';
 
 import { Meal, Metrics, api } from '@lib/api';
 
-export const queryClient = new QueryClient();
+export const queryClient = new QueryClient({});
 
 export const queries = createQueryKeyStore({
   meals: {
