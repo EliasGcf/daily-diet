@@ -11,7 +11,8 @@ export default class AuthController {
         expiresIn: '7 days',
       })
 
-      return token
+      // This is required to return user data
+      return { ...token }
     } catch {
       return response.unauthorized('Invalid credentials')
     }
