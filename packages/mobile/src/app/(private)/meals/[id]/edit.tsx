@@ -7,7 +7,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Button } from '@components/Button';
 import { DatePicker } from '@components/DatePicker';
-import { Select } from '@components/Select';
+import { OnDietSelect } from '@components/Select';
 import { Text } from '@components/ui/Text';
 import { TextInput } from '@components/ui/TextInput';
 
@@ -98,14 +98,14 @@ export default function EditPage() {
           </Text>
 
           <View style={{ flexDirection: 'row', gap: 8 }}>
-            <Select
-              value
+            <OnDietSelect
+              isOnDiet
               onPress={() => setIsOnDiet(true)}
               selected={isOnDiet === true}
             />
-            <Select
+            <OnDietSelect
               onPress={() => setIsOnDiet(false)}
-              value={false}
+              isOnDiet={false}
               selected={isOnDiet === false}
             />
           </View>

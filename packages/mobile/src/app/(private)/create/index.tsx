@@ -1,8 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { router } from 'expo-router';
 import { ArrowLeft } from 'phosphor-react-native';
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { StyleSheet, View } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -10,29 +9,32 @@ import { z } from 'zod';
 
 import { Button } from '@components/Button';
 import { Form } from '@components/Form';
-import { Select } from '@components/Select';
+import { RadioGroup } from '@components/RadioGroup';
+import { OnDietSelect } from '@components/Select';
 import { Text } from '@components/ui/Text';
 
 import { useCreateMeal } from '@hooks/useMeals';
 
 import { theme } from '@shared/theme';
 
-const formSchema = z.object({
+const inputFormSchema = z.object({
   name: z.string({ required_error: 'Nome é obrigatório' }),
   description: z.string({ required_error: 'Descrição é obrigatória' }),
   date: z.date(),
   time: z.date(),
+  onDiet: z.enum(['on-diet', 'off-diet'], {
+    required_error: 'É preciso informar um dos valores.',
+  }),
 });
 
-type FormData = z.infer<typeof formSchema>;
+type FormData = z.infer<typeof inputFormSchema>;
 
 export default function CreatePage() {
-  const [isOnDiet, setIsOnDiet] = useState<boolean>(false);
   const safeAreaInsets = useSafeAreaInsets();
   const createMealMutation = useCreateMeal();
 
   const form = useForm<FormData>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(inputFormSchema),
     defaultValues: {
       date: new Date(),
       time: new Date(),
@@ -44,6 +46,8 @@ export default function CreatePage() {
     formData.date.setMinutes(formData.time.getMinutes());
     formData.date.setSeconds(0);
     formData.date.setMilliseconds(0);
+
+    const isOnDiet = formData.onDiet === 'on-diet';
 
     await createMealMutation.mutateAsync({
       name: formData.name,
@@ -104,21 +108,36 @@ export default function CreatePage() {
             Está dentro da dieta?
           </Text>
 
-          <View style={{ flexDirection: 'row', gap: 8 }}>
-            <Select
-              value
-              onPress={() => setIsOnDiet(true)}
-              selected={isOnDiet === true}
-            />
-            <Select
-              onPress={() => setIsOnDiet(false)}
-              value={false}
-              selected={isOnDiet === false}
-            />
-          </View>
+          <Controller
+            control={form.control}
+            name="onDiet"
+            render={({ field, fieldState }) => (
+              <>
+                <RadioGroup.Root
+                  value={field.value}
+                  onValueChange={field.onChange}
+                  style={{ flexDirection: 'row', gap: 8 }}
+                >
+                  <RadioGroup.Item asChild value="on-diet">
+                    <OnDietSelect isOnDiet />
+                  </RadioGroup.Item>
+
+                  <RadioGroup.Item asChild value="off-diet">
+                    <OnDietSelect isOnDiet={false} />
+                  </RadioGroup.Item>
+                </RadioGroup.Root>
+
+                {fieldState.error && (
+                  <Text size="sm" color="red.dark">
+                    {fieldState.error.message}
+                  </Text>
+                )}
+              </>
+            )}
+          />
         </View>
 
-        <View style={[styles.footer]}>
+        <View style={styles.footer}>
           <Button
             onPress={() => form.handleSubmit(handleSubmit)()}
             title="Cadastrar refeição"

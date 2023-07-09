@@ -7,16 +7,16 @@ import { Text } from '@components/ui/Text';
 
 import { theme } from '@shared/theme';
 
-export type SelectProps = Omit<RectButtonProps, 'style'> & {
-  value: boolean;
+type OnDietSelectProps = Omit<RectButtonProps, 'style'> & {
+  isOnDiet: boolean;
   selected?: boolean;
 };
 
-export function Select({ value, selected = false, ...rest }: SelectProps) {
+export function OnDietSelect({ isOnDiet, selected = false, ...rest }: OnDietSelectProps) {
   return (
     <RectButton
       {...rest}
-      underlayColor={value ? theme.colors.green.light : theme.colors.red.light}
+      underlayColor={isOnDiet ? theme.colors.green.light : theme.colors.red.light}
       activeOpacity={1}
       style={styles.container}
     >
@@ -24,14 +24,17 @@ export function Select({ value, selected = false, ...rest }: SelectProps) {
         style={[
           styles.content,
           selected && {
-            borderColor: value ? theme.colors.green.dark : theme.colors.red.dark,
-            backgroundColor: value ? theme.colors.green.light : theme.colors.red.light,
+            borderColor: isOnDiet ? theme.colors.green.dark : theme.colors.red.dark,
+            backgroundColor: isOnDiet ? theme.colors.green.light : theme.colors.red.light,
           },
         ]}
       >
-        <Dot size={8} color={value ? theme.colors.green.dark : theme.colors.red.dark} />
+        <Dot
+          size={8}
+          color={isOnDiet ? theme.colors.green.dark : theme.colors.red.dark}
+        />
         <Text size="sm" weight="bold" color="gray.100">
-          {value ? 'Sim' : 'Não'}
+          {isOnDiet ? 'Sim' : 'Não'}
         </Text>
       </View>
     </RectButton>
