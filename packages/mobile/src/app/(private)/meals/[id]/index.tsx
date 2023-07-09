@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { Link, router, useLocalSearchParams } from 'expo-router';
 import { ArrowLeft, Pencil, Trash } from 'phosphor-react-native';
 import { useState } from 'react';
@@ -41,6 +42,8 @@ export default function MealDetail() {
     );
   }
 
+  const formattedDate = dayjs(query.data.date).format('DD/MM/YYYY [às] HH:mm');
+
   return (
     <View
       style={[
@@ -76,7 +79,7 @@ export default function MealDetail() {
             Data e hora
           </Text>
           <Text color="gray.200" size="md">
-            12/08/2022 às 16:00
+            {formattedDate}
           </Text>
         </View>
 
