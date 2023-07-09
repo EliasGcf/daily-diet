@@ -76,7 +76,7 @@ export default function HomePage() {
 
       <View style={styles.listHeader}>
         <Text color="gray.100">Refeições</Text>
-        <Link asChild href="/create/">
+        <Link asChild href="/meals/create/">
           <Button title="Nova refeição" icon={Plus} />
         </Link>
       </View>

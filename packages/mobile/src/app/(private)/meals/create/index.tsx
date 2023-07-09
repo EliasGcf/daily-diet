@@ -42,7 +42,7 @@ export default function CreatePage() {
     });
 
     router.replace({
-      pathname: '/create/feedback',
+      pathname: '/meals/create/feedback',
       params: { isOnDiet },
     });
   }
