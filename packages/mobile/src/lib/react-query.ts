@@ -37,7 +37,9 @@ export const queries = createQueryKeyStore({
 
         return {
           ...response.data,
-          percentage: percentage === 0 ? 0 : percentage.toFixed(2).replace('.', ','),
+          percentage: Number.isInteger(percentage)
+            ? String(percentage)
+            : percentage.toFixed(2).replace('.', ','),
           isOnDiet,
         };
       },
