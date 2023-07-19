@@ -28,3 +28,46 @@ Remembering that you need to have a [Figma](http://figma.com) account to access 
 
 - [ReactJS](https://reactjs.org/)
 - [TypeScript](https://www.typescriptlang.org/)
+- [React Native](https://reactnative.dev/)
+- [Expo](https://expo.dev/)
+- [Expo Router](https://docs.expo.dev/guides/routing-and-navigation/)
+- [React Query](https://tanstack.com/query/latest/)
+- [AdonisJS](https://adonisjs.com/)
+
+## 💻 Getting started
+
+### Requirements
+
+- [Node.js](https://nodejs.org/en/)
+- [PNPM](https://pnpm.io/)
+- [Docker & DockerCompose](https://docs.docker.com/)
+
+**Clone the project and access the folder**
+
+```bash
+git clone https://github.com/EliasGcf/daily-diet.git && cd daily-diet
+```
+
+**Follow the steps below**
+
+```bash
+# Install the dependencies
+$ pnpm install
+
+# Start the database
+$ docker compose up -d
+```
+
+For the backend: [Back-end - Getting started](./packages/api/README.md)
+
+For the Mobile: [Mobile - Getting started](./packages/mobile/README.md)
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+<p align="center">
+  Made with 💜 by <a href="https://www.linkedin.com/in/eliasgcf/">Elias Gabriel</a>
+</p>
