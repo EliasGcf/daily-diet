@@ -1,8 +1,10 @@
-import type { Meal } from '@lib/api';
+import { MotiView } from 'moti';
 import { StyleSheet, View } from 'react-native';
 
 import { Dot } from '@components/Dot';
 import { Text } from '@components/ui/Text';
+
+import type { Meal } from '@lib/api';
 
 import { theme } from '@shared/theme';
 import { formatTime } from '@shared/utils/format-time';
@@ -15,7 +17,7 @@ export function Meal({ meal }: MealProps) {
   const formattedHour = formatTime(new Date(meal.date));
 
   return (
-    <View style={styles.container}>
+    <MotiView from={{ opacity: 0 }} animate={{ opacity: 1 }} style={styles.container}>
       <Text size="xs" weight="bold">
         {formattedHour}
       </Text>
@@ -30,7 +32,7 @@ export function Meal({ meal }: MealProps) {
         size={14}
         color={meal.isOnDiet ? theme.colors.green.mid : theme.colors.red.mid}
       />
-    </View>
+    </MotiView>
   );
 }
 
